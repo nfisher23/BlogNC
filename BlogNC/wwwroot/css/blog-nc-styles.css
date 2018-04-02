@@ -1,1 +1,26 @@
 ﻿
+p {
+    font-size: 1.11rem;
+}
+
+.blog-nc-header {
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.text-custom-dark-muted {
+    color: #434657;
+    font-weight: 400;
+}
+.text-custom-dark-muted:hover {
+    color: #181f44;
+    font-weight: 400;
+    text-decoration:none;
+}
+
+.text-custom-light-footer {
+    color: #f8f8f8;
+}
+.text-custom-light-footer:hover {
+    color: #c2c3c7;
+    text-decoration:none;
+}
