@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\NCAdmin\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
