@@ -59,23 +59,7 @@
                         <p class="lead">Our author is a great author, and our author will blog your pants off.</p>
                     </div>
                 </div>
-                <div class="card border-0 mt-3">
-                    <div class="card-header m-0 border">
-                        <h4 class="card-title mb-0 m-2">Recent Posts</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            @for (int i = 0; i < 10; i++)
-                {
-                    <li class="m-1">
-                        <a href="#" class="text-custom-dark-muted pl-2 lead">
-                            Post Number @i
-                        </a>
-                    </li>
-    }
-                        </ul>
-                    </div>
-                </div>
+                @await Component.InvokeAsync("RecentPosts")
 
                 <div class="card border-0 mt-3">
                     <div class="card-header m-0 border">

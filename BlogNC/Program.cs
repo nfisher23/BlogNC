@@ -28,7 +28,8 @@ namespace BlogNC
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseDefaultServiceProvider(opts => opts.ValidateScopes = false)                
+                .UseKestrel() 
+                .UseDefaultServiceProvider(opts => opts.ValidateScopes = false) 
                 .Build();
     }
 }

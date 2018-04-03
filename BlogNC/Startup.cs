@@ -28,7 +28,9 @@ namespace BlogNC
 
             services.AddSingleton<IHostingEnvironment>(CurrentEnvironment);
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(blogContextConnectionString));
+            services.AddTransient<IBlogPostRepository, EFBlogPostRepository>();
 
+             
             services.AddMvc();
         }
 
