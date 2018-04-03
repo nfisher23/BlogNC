@@ -2,23 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogNC.Areas.Blog.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlogNC
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        IConfiguration AppSettingsConfiguration;
+        IHostingEnvironment CurrentEnvironment;
+        public Startup(IConfiguration config, IHostingEnvironment environment)
         {
+            AppSettingsConfiguration = config;
+            CurrentEnvironment = environment;
+        }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            var blogContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppDbContext");
+
+            services.AddSingleton<IHostingEnvironment>(CurrentEnvironment);
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(blogContextConnectionString));
+
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            var blogContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppDbContext");
+
+            // SQLite does not have support for a large number of built in EF Core migrations--
+            // when we move to production we will use a local PostgreSQL DB and cross 
+            // this bridge once the MVR is completed
+            throw new NotImplementedException();
+            //services.AddDbContext<ApplicationDbContext>(o => o.UseNpgSql(blogContextConnectionString));
+
+            services.AddMvc();
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
