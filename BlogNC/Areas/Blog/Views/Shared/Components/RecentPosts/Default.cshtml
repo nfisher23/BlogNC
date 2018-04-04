@@ -6,10 +6,12 @@
     </div>
     <div class="card-body">
         <ul class="list-unstyled">
-            @foreach (var post in Model.Posts.OrderByDescending(p => p.DateTimePublished))
+            @foreach (var post in Model.Posts)
     {
         <li class="m-1">
-            <a href="#" class="text-custom-dark-muted pl-2 lead">
+            <a asp-action="FindPost" asp-area="Blog" asp-controller="Post"
+               asp-route-urlTitle="@post.UrlTitle"
+               class="text-custom-dark-muted pl-2 lead">
                 @post.PageTitle
             </a>
         </li>

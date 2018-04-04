@@ -9,5 +9,8 @@ namespace BlogNC.Areas.Blog.Models
     {
         IQueryable<BlogPostPublished> Posts { get; }
         IQueryable<BlogPostDraft> Drafts { get; }
+
+        BlogPostPublished GetPostByUrlTitle(string urlTitle);
+
     }
 }

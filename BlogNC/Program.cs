@@ -23,7 +23,7 @@ namespace BlogNC
             SeedData.EnsureBlogPopulated(host.Services, env);
              
             host.Run(); 
-        }
+        } 
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

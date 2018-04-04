@@ -37,9 +37,10 @@ namespace BlogNC.Areas.Blog.Models
                 BlogPostPublished p = new BlogPostPublished
                 {
                     PageTitle = $"Post Title No {i}",
-                    FullContent = $"Sample Content for post no {i}",
+                    FullContent = $"<h3>A Sample</h3> <p>Content for post no {i}</p>",
                     DatePublished = new DateTime(2017, i, i),
-                    TimeOfDayPublished = new TimeSpan(i, 0, 0)
+                    TimeOfDayPublished = new TimeSpan(i, 0, 0),
+                    Author = "Nick Fisher"
                 };
 
                 posts.Add(p);
@@ -56,7 +57,8 @@ namespace BlogNC.Areas.Blog.Models
                 BlogPostDraft d = new BlogPostDraft
                 {
                     PageTitle = $"Draft Title No {i}",
-                    FullContent = $"Sample Content for post no {i}"
+                    FullContent = $"Sample Content for post no {i}",
+                    Author = "Nick Fisher"
                 };
 
                 drafts.Add(d);

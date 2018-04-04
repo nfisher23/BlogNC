@@ -39,9 +39,10 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
         [Test]
         public void GetPosts_PostsAreThere()
         {
-            Assert.AreEqual(SharedDbContext.Posts.Count(), 9);
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            Assert.AreEqual(repo.Posts.Count(), 9);
 
-            var titles = SharedDbContext.Posts.Select(p => p.PageTitle).ToList();
+            var titles = repo.Posts.Select(p => p.PageTitle).ToList();
 
             for (int i = 1; i < 10; i++)
                 Assert.Contains($"Post Title No {i}", titles);
@@ -50,12 +51,45 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
         [Test]
         public void GetDrafts_DraftsAreThere()
         {
-            Assert.AreEqual(SharedDbContext.Drafts.Count(), 9);
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            Assert.AreEqual(repo.Drafts.Count(), 9);
 
-            var titles = SharedDbContext.Drafts.Select(p => p.PageTitle).ToList();
+            var titles = repo.Drafts.Select(p => p.PageTitle).ToList();
 
             for (int i = 1; i < 10; i++)
                 Assert.Contains($"Draft Title No {i}", titles);
+        }
+
+        [Test]
+        public void GetPostByUrlTitle_IsThere_ReturnsRealPost()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var post = repo.GetPostByUrlTitle("Post-Title-No-2");
+
+            Assert.IsNotNull(post);
+            Assert.AreEqual(post.PageTitle, "Post Title No 2");
+        }
+
+        [Test]
+        public void GetPostByUrlTitle_IsNotThere_ReturnsNull()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var notAPost = repo.GetPostByUrlTitle("Not-A-Real-Title");
+
+            Assert.IsNull(notAPost);
+        }
+
+        [Test]
+        public void GetPostByUrlTitle_AnyCaseWorks()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var shouldGetPost = repo.GetPostByUrlTitle("POsT-title-NO-5");
+
+            Assert.IsNotNull(shouldGetPost);
+            Assert.AreEqual(shouldGetPost.PageTitle, "Post Title No 5");
         }
 
 

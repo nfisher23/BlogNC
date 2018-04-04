@@ -28,5 +28,12 @@ namespace BlogNC.Areas.Blog.Models
                 return AppDbContext.Drafts;
             }
         }
+
+        public BlogPostPublished GetPostByUrlTitle(string urlTitle)
+        {
+            return AppDbContext.Posts
+                .Where(p => p.UrlTitle.ToLower() == urlTitle.ToLower()).FirstOrDefault();
+        }
+
     }
 }

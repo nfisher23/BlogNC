@@ -25,7 +25,7 @@ namespace BlogNC.Areas.Blog.Models
         }
         public string UrlTitle { get; private set; }
         public string FullContent { get; set; }
-
+        public string Author { get; set; }
 
         // EF Core does not yet (as of EF Core 2.0) support 
         // many-to-many relationships and will probably never support 

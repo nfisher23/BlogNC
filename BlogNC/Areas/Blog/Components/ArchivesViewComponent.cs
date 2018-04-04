@@ -13,7 +13,7 @@ namespace BlogNC.Areas.Blog.Components
         public ArchivesViewComponent(IBlogPostRepository repo)
         {
             blogRepository = repo;
-        }
+        } 
 
         public IViewComponentResult Invoke()
         {

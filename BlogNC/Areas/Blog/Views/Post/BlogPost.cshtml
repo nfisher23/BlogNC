@@ -1,0 +1,17 @@
+﻿@model BlogPostViewModel
+
+<div class="row pb-3 mb-4 font-italic border-bottom">
+    <div class="col-lg-8">
+        <h2 class="d-inline">@Model.Post.PageTitle</h2>
+    </div>
+    <div class="col-lg-4">
+        <p class="text-lg-right">
+           @Model.Post.DatePublished.ToShortDateString() by 
+            <a href="https://nickolasfisher.com">@Model.Post.Author</a>
+        </p>
+    </div>
+</div>
+
+<div>
+    @Html.Raw(Model.Post.FullContent)
+</div>
