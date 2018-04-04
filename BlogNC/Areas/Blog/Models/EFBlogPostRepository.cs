@@ -29,9 +29,28 @@ namespace BlogNC.Areas.Blog.Models
             }
         }
 
+        public IQueryable<StaticPage> StaticPages
+        {
+            get
+            {
+                return AppDbContext.StaticPages;
+            }
+        }
+
         public IQueryable<BlogPostPublished> GetAllPostsDescending()
         {
             return AppDbContext.Posts.OrderByDescending(p => p.DateTimePublished);
+        }
+
+        public IQueryable<StaticPage> GetFooterStaticPages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<StaticPage> GetNavBarStaticPages()
+        {
+            return AppDbContext.StaticPages.Where(sp => sp.InMainNav)
+                .OrderBy(sp => sp.MainNavPriority);
         }
 
         public BlogPostPublished GetPostByUrlTitle(string urlTitle)

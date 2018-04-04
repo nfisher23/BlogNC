@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogNC.Areas.Blog.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace BlogNC.Areas.Blog.Models
 
         // EF Core does not yet (as of EF Core 2.0) support 
         // many-to-many relationships and will probably never support 
-        // primitive types. The workaround here, using a entity class for the join table:
+        // primitive types. The workaround here, using an entity class for the join table:
         // https://docs.microsoft.com/en-us/ef/core/modeling/relationships#many-to-many
         // can allegedly run into problems when you try to migrate schemas.
         // To avoid falling down this rabbit hole we'll just take a slight 
@@ -55,21 +56,9 @@ namespace BlogNC.Areas.Blog.Models
 
 
         ///<summary>Follow this-is-a-blog-post convention without special characters</summary>
-        private string GetUrlTitle(string currentPageTitle)
+        public static string GetUrlTitle(string currentPageTitle)
         {
-            string _urlTitle = "";
-            foreach (var letter in currentPageTitle)
-            {
-                if (char.IsLetterOrDigit(letter))
-                {
-                    _urlTitle += letter;
-                }
-                else if (letter == ' ')
-                {
-                    _urlTitle += "-";
-                }
-            }
-            return _urlTitle;
+            return UrlHelper.GetUrlTitleFromPageTitle(currentPageTitle);
         }
     }
 }

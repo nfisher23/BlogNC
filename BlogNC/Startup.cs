@@ -61,8 +61,9 @@ namespace BlogNC
             {
                 routes.MapRoute(
                     name: "",
-                    template: "{action=Index}",
-                    defaults: new { area = "Blog", controller = "StaticPages" });
+                    template: "{urlTitle?}",
+                    defaults: new { area = "Blog", controller = "StaticPages",
+                        action = "FindStaticPage"});
 
 
                 routes.MapRoute(

@@ -28,13 +28,7 @@
                 </div>
             </div>
         </header>
-        <div>
-            <nav class="nav d-flex justify-content-center">
-                <a class="p-3 mx-3 text-muted" asp-area="Blog" asp-controller="StaticPages" asp-action="Index">Nav1</a>
-                <a class="p-3 mx-3 text-muted" asp-area="Blog" asp-controller="StaticPages" asp-action="Index">Nav2</a>
-                <a class="p-3 mx-3 text-muted" asp-area="Blog" asp-controller="StaticPages" asp-action="Index">Nav3</a>
-            </nav>
-        </div>
+        @await Component.InvokeAsync("Navigation")
 
         <div class="jumbotron p-3 p-md-5 text-white bg-dark">
             <div class="col-lg-6">

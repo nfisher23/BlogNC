@@ -27,6 +27,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             SharedDbContext.Database.EnsureCreated();
             SharedDbContext.Posts.AddRange(Generate10Posts());
             SharedDbContext.Drafts.AddRange(Generate10Drafts());
+            SharedDbContext.StaticPages.AddRange(Generate10StaticPages());
             SharedDbContext.SaveChanges();
         }
 
@@ -106,8 +107,48 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             }
         }
 
+        [Test]
+        public void GetAllStaticPages_RetrievesAll()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
 
+            var pages = repo.StaticPages;
+            var titles = pages.Select(p => p.PageTitle).ToList();
+            for (int i = 1; i < 10; i++)
+            {
+                Assert.Contains($"Static Page No {i}", titles);
+            }
+        }
 
+        [Test]
+        public void GetNavBarStaticPages_GetsPages()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var pages = repo.GetNavBarStaticPages();
+
+            var titles = pages.Select(p => p.PageTitle).ToList();
+            Assert.AreEqual(pages.Count(), 5);
+            // should have only odds
+            for (int i = 1; i < 10; i += 2)
+            {
+                Assert.Contains($"Static Page No {i}", titles);
+                Assert.IsFalse(titles.Contains($"Static Page No {i - 1}"));
+            }
+        }
+
+        [Test]
+        public void GetNavBarStaticPages_CorrectOrder()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var pages = repo.GetNavBarStaticPages().ToList();
+
+            for (int i = 0; i < 4; i++)
+            {
+                Assert.IsTrue(pages[i].MainNavPriority < pages[i+1].MainNavPriority);
+            }
+        }
 
         private static IQueryable<BlogPostPublished> Generate10Posts()
         {
@@ -124,7 +165,6 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
 
                 posts.Add(p);
             }
-
             return posts.AsQueryable();
         }
 
@@ -145,5 +185,23 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             return drafts.AsQueryable();
         }
 
+        private static IQueryable<StaticPage> Generate10StaticPages()
+        {
+            List<StaticPage> pages = new List<StaticPage>();
+            bool navToggle = true;
+            for (int i = 1; i < 10; i++)
+            {
+                StaticPage sp = new StaticPage
+                {
+                    PageTitle = $"Static Page No {i}",
+                    FullContent = $"Sample Content for sample page no {i}",
+                    InMainNav = navToggle,
+                    MainNavPriority = 10 - i
+                };
+                navToggle = !navToggle;
+                pages.Add(sp);
+            }
+            return pages.AsQueryable();
+        }
     }
 }

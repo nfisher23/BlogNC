@@ -24,9 +24,14 @@ namespace BlogNC.Areas.Blog.Models
                     context.Posts.AddRange(GenerateSamplePosts());
                     context.Drafts.AddRange(GenerateSampleDrafts());
                     context.SaveChanges();
+
+                    // static pages
+                    context.StaticPages.AddRange(GenerateStaticPages());
+                    context.SaveChanges();
                 }
             }
         }
+
 
 
         private static IQueryable<BlogPostPublished> GenerateSamplePosts()
@@ -45,7 +50,6 @@ namespace BlogNC.Areas.Blog.Models
 
                 posts.Add(p);
             }
-
             return posts.AsQueryable();
         }
 
@@ -67,6 +71,52 @@ namespace BlogNC.Areas.Blog.Models
             return drafts.AsQueryable();
         }
 
+        private static IQueryable<StaticPage> GenerateStaticPages()
+        {
+            List<StaticPage> pages = new List<StaticPage>();
 
+            pages.Add(new StaticPage
+            {
+                PageTitle = "Home",
+                FullContent = "Welcome to BlogNC",
+                InMainNav = true,
+                InFooter = true,
+                MainNavPriority = 0,
+                FooterPriority = 0
+            });
+
+            pages.Add(new StaticPage
+            {
+                PageTitle = "About",
+                FullContent = "About the author",
+                InMainNav = true,
+                InFooter = true,
+                MainNavPriority = 1,
+                FooterPriority = 1
+            });
+
+            pages.Add(new StaticPage
+            {
+                PageTitle = "Contact",
+                FullContent = "Contact Information for BlogNC...",
+                InMainNav = false,
+                InFooter = true,
+                MainNavPriority = 1000,
+                FooterPriority = 2
+            });
+
+            pages.Add(new StaticPage
+            {
+                PageTitle = "Mission",
+                FullContent = "Mission statement for BlogNC...",
+                InMainNav = true,
+                InFooter = false,
+                MainNavPriority = 2,
+                FooterPriority = 1000
+            });
+
+
+            return pages.AsQueryable();
+        }
     }
 }

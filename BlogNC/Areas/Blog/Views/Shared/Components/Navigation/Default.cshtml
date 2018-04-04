@@ -1,0 +1,13 @@
+﻿@model NavigationViewModel
+
+
+<nav>
+    <nav class="nav d-flex justify-content-center">
+        @foreach (StaticPage p in Model.QualifyingStaticPages)
+        {
+            <a class="p-3 mx-3 text-muted" href="#">
+               @p.PageTitle
+</a>
+        }
+    </nav>
+</nav>

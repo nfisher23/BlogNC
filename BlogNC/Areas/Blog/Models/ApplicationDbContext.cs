@@ -25,5 +25,6 @@ namespace BlogNC.Areas.Blog.Models
         public DbSet<BlogPostTemplate> Templates { get; set; }
         public DbSet<BlogPostPublished> Posts { get; set; }
         public DbSet<BlogPostDraft> Drafts { get; set; }
+        public DbSet<StaticPage> StaticPages { get; set; }
     }
 }
