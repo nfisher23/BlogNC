@@ -86,10 +86,24 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
         {
             EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
 
-            var shouldGetPost = repo.GetPostByUrlTitle("POsT-title-NO-5");
+            var shouldGetPost = repo.GetPostByUrlTitle("POsT-tiTLe-NO-5");
 
             Assert.IsNotNull(shouldGetPost);
             Assert.AreEqual(shouldGetPost.PageTitle, "Post Title No 5");
+        }
+
+        [Test]
+        public void GetAllPostsDescending_CorrectOrder()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var shouldBeDescending = repo.GetAllPostsDescending().ToList();
+
+            for (int i = 0; i < shouldBeDescending.Count - 1; i++)
+            {
+                Assert.IsTrue(shouldBeDescending[i].DateTimePublished 
+                    >= shouldBeDescending[i + 1].DateTimePublished);
+            }
         }
 
 

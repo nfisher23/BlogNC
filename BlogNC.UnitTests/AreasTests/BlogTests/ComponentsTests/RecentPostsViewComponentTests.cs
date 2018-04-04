@@ -7,7 +7,7 @@ using System.Text;
 using System.Linq;
 using BlogNC.Areas.Blog.Components;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
-using BlogNC.Areas.Blog.Models.ViewModels;
+using BlogNC.Areas.Blog.Models.ViewComponentModels;
 
 namespace BlogNC.UnitTests.AreasTests.BlogTests.ComponentsTests
 {

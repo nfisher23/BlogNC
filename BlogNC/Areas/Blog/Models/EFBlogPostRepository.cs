@@ -29,11 +29,19 @@ namespace BlogNC.Areas.Blog.Models
             }
         }
 
+        public IQueryable<BlogPostPublished> GetAllPostsDescending()
+        {
+            return AppDbContext.Posts.OrderByDescending(p => p.DateTimePublished);
+        }
+
         public BlogPostPublished GetPostByUrlTitle(string urlTitle)
         {
             return AppDbContext.Posts
-                .Where(p => p.UrlTitle.ToLower() == urlTitle.ToLower()).FirstOrDefault();
+                .Where(p => p.UrlTitle.ToLower() == urlTitle.ToLower())
+                .FirstOrDefault();
         }
+
+        
 
     }
 }

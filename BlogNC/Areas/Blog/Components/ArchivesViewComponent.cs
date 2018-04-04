@@ -1,4 +1,5 @@
 ﻿using BlogNC.Areas.Blog.Models;
+using BlogNC.Areas.Blog.Models.ViewComponentModels.Archives;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace BlogNC.Areas.Blog.Components
 
         public IViewComponentResult Invoke()
         {
-            throw new NotImplementedException();
+            ArchivesViewModel model = new ArchivesViewModel(blogRepository);
+
+            return View(model);
         }
     }
 }

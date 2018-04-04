@@ -1,5 +1,5 @@
 ﻿using BlogNC.Areas.Blog.Models;
-using BlogNC.Areas.Blog.Models.ViewModels;
+using BlogNC.Areas.Blog.Models.ViewComponentModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

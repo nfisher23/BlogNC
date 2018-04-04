@@ -11,6 +11,6 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<BlogPostDraft> Drafts { get; }
 
         BlogPostPublished GetPostByUrlTitle(string urlTitle);
-
+        IQueryable<BlogPostPublished> GetAllPostsDescending();
     }
 }

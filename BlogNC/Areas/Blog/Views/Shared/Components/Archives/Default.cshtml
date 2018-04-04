@@ -1,1 +1,36 @@
-﻿
+﻿@model ArchivesViewModel
+
+<div class="card border-0 mt-3">
+    <div class="card-header m-0 border">
+        <h4 class="card-title mb-0 m-2">Archives</h4>
+    </div>
+    <div class="card-body">
+        <ul class="list-unstyled">
+            @foreach (var bucket in Model.BucketsOfPostsDescending)
+            {
+                <li class="m-1">
+                    <a href="#@bucket.IdName" data-toggle="collapse"
+                       class="text-custom-dark-muted pl-2 lead">
+                        <span class="mr-2">@bucket.DisplayName</span>
+                        <span class="px-1 py-0 badge badge-pill border">@bucket.Posts.Count</span>
+                    </a>
+                    <div class="collapse" id="@bucket.IdName">
+                        <ul class="list-unstyled m-2">
+                            @foreach (var post in bucket.Posts)
+                            {
+                                <li class="m-1">
+                                    <a asp-action="FindPost"
+                                       asp-area="Blog" asp-controller="Post"
+                                       asp-route-urlTitle="@post.UrlTitle"
+                                       class="text-custom-dark-muted pl-1">
+                                        @post.PageTitle
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

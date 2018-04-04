@@ -20,7 +20,8 @@
         <header class="blog-nc-header pb-2">
             <div class="row">
                 <div class="col-8">
-                    <img src="~/imgs/blog-nc-logo.svg" asp-append-version="true" width="250" height="82" />
+                    <img src="~/imgs/blog-nc-logo.svg" 
+                         asp-append-version="true" width="250" height="82" />
                 </div>
                 <div class="col-4 text-muted d-flex align-items-end mt-2">
                     <p class="ml-auto">An(other) open source blogging framework</p>
@@ -61,23 +62,7 @@
                 </div>
                 @await Component.InvokeAsync("RecentPosts")
 
-                <div class="card border-0 mt-3">
-                    <div class="card-header m-0 border">
-                        <h4 class="card-title mb-0 m-2">Archives</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            @for (int i = 0; i < 10; i++)
-                {
-                    <li class="m-1">
-                        <a href="#" class="text-custom-dark-muted pl-2 lead">
-                            Archive Bucket @i
-                        </a>
-                    </li>
-    }
-                        </ul>
-                    </div>
-                </div>
+                @await Component.InvokeAsync("Archives")
             </aside>
         </div>
     </div>

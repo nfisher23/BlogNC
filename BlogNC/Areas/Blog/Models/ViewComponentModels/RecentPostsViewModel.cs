@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlogNC.Areas.Blog.Models.ViewModels
+namespace BlogNC.Areas.Blog.Models.ViewComponentModels
 {
     public class RecentPostsViewModel
     {

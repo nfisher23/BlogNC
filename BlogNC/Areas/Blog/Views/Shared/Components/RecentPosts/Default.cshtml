@@ -7,7 +7,7 @@
     <div class="card-body">
         <ul class="list-unstyled">
             @foreach (var post in Model.Posts)
-    {
+        {
         <li class="m-1">
             <a asp-action="FindPost" asp-area="Blog" asp-controller="Post"
                asp-route-urlTitle="@post.UrlTitle"
@@ -15,7 +15,7 @@
                 @post.PageTitle
             </a>
         </li>
-}
+        }
         </ul>
     </div> 
 </div>
