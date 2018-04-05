@@ -249,6 +249,42 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.IsTrue(posts.Count < 25);
         }
 
+        [Test]
+        public void GetMostRecentDrafts_CountIsCorrect()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var drafts = repo.GetMostRecentDrafts(7).ToList();
+            Assert.AreEqual(7, drafts.Count);
+
+            drafts = repo.GetMostRecentDrafts(4).ToList();
+            Assert.AreEqual(4, drafts.Count);
+        }
+        
+        [Test]
+        public void GetMostRecentDrafts_OrderIsCorrect()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var ordered = repo.GetMostRecentDrafts(5).ToList();
+
+            Assert.AreEqual(ordered.Count, 5);
+            for (int i = 0; i < 4; i++)
+            {
+                Assert.IsTrue(ordered[i].LastEdit >= ordered[i + 1].LastEdit);
+            }
+        }
+
+        [Test]
+        public void GetMostRecentDrafts_TooManyInArgument_ReturnsLessThanFull()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var drafts = repo.GetMostRecentDrafts(25).ToList();
+
+            Assert.IsTrue(drafts.Count < 25);
+        }
+
 
 
 
@@ -278,7 +314,8 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                 BlogPostDraft d = new BlogPostDraft
                 {
                     PageTitle = $"Draft Title No {i}",
-                    FullContent = $"Sample Content for post no {i}"
+                    FullContent = $"Sample Content for post no {i}",
+                    LastEdit = new DateTime(2017, i, i)
                 };
 
                 drafts.Add(d);

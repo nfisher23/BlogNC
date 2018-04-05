@@ -1,23 +1,23 @@
-﻿@model AdminRecentPostsViewModel
+﻿@model AdminRecentDraftsViewModel
 @{ }
 
 <div class="card">
     <a href="#"
        class="card-link text-dark bg-light">
         <div class="card-header pt-3 pb-2">
-            <h6>Recent Blog Posts</h6>
+            <h6>Recent Drafts</h6>
         </div>
     </a>
     <div class="card-body">
         <ul class="list-unstyled">
-            @foreach (var post in Model.Posts)
+            @foreach (var draft in Model.Drafts)
             {
                 <a href="#"
                    class="list-group-item p-0 border-0">
                     <li class="list-group-item list-group-item-action">
                         <div class="d-flex">
-                            <h5>@post.PageTitle</h5>
-                            <small class="d-inline-block ml-auto">@post.DateTimePublished.ToString("MM/dd/yyyy H:mm")</small>
+                            <h5>@draft.PageTitle</h5>
+                            <small class="d-inline-block ml-auto">@draft.LastEdit.ToString("MM/dd/yyyy H:mm")</small>
                         </div>
                     </li>
                 </a>

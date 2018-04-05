@@ -5,7 +5,10 @@
 <br />
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-lg-6">
         @await Component.InvokeAsync("AdminRecentPosts")
+    </div>    
+    <div class="col-lg-6 mt-5 mt-lg-0">
+        @await Component.InvokeAsync("AdminRecentDrafts")
     </div>
 </div>

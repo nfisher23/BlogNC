@@ -19,6 +19,6 @@ namespace BlogNC.Areas.Blog.Models
         StaticPage GetStaticPageByUrlTitle(string urlTitle);
 
         IQueryable<BlogPostPublished> GetMostRecentPosts(int numToGet);
-        IQueryable<BlogPostPublished> GetMostRecentDrafts(int numToGet);
+        IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
     }
 }

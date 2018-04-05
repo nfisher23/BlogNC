@@ -10,9 +10,10 @@ namespace BlogNC.Areas.Blog.Models
         public BlogPostDraft()
         {
             TimeStarted = DateTime.Now;
+            LastEdit = DateTime.Now;
         }
 
-        public DateTime TimeStarted { get; set; }
+        public DateTime TimeStarted { get; }
 
         public DateTime LastEdit { get; set; }
     }

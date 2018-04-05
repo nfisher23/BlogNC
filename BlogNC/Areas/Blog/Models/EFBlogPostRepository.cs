@@ -69,9 +69,10 @@ namespace BlogNC.Areas.Blog.Models
                 .FirstOrDefault();
         }
 
-        public IQueryable<BlogPostPublished> GetMostRecentDrafts(int numToGet)
+        public IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet)
         {
-            throw new NotImplementedException();
+            return AppDbContext.Drafts
+                .OrderByDescending(d => d.LastEdit).Take(numToGet);
         }
 
         public IQueryable<BlogPostPublished> GetMostRecentPosts(int numToGet)
