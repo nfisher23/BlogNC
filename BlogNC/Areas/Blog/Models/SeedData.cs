@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,7 +79,7 @@ namespace BlogNC.Areas.Blog.Models
             pages.Add(new StaticPage
             {
                 PageTitle = "Home",
-                FullContent = "Welcome to BlogNC",
+                FullContent = "Welcome to BlogNC...",
                 InMainNav = true,
                 InFooter = true,
                 MainNavPriority = 0,
@@ -88,7 +89,7 @@ namespace BlogNC.Areas.Blog.Models
             pages.Add(new StaticPage
             {
                 PageTitle = "About",
-                FullContent = "About the author",
+                FullContent = "About the author..",
                 InMainNav = true,
                 InFooter = true,
                 MainNavPriority = 1,

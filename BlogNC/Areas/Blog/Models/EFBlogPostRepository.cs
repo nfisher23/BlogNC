@@ -44,7 +44,8 @@ namespace BlogNC.Areas.Blog.Models
 
         public IQueryable<StaticPage> GetFooterStaticPages()
         {
-            throw new NotImplementedException();
+            return AppDbContext.StaticPages.Where(sp => sp.InFooter)
+                .OrderBy(sp => sp.FooterPriority);
         }
 
         public IQueryable<StaticPage> GetNavBarStaticPages()

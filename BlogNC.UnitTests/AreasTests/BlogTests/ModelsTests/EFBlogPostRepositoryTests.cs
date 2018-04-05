@@ -151,6 +151,36 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
         }
 
         [Test]
+        public void GetFooterStaticPages_GetsPages()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var pages = repo.GetFooterStaticPages();
+
+            var titles = pages.Select(p => p.PageTitle).ToList();
+            Assert.AreEqual(pages.Count(), 4);
+            // should have only evens
+            for (int i = 2; i < 10; i += 2)
+            {
+                Assert.Contains($"Static Page No {i}", titles);
+                Assert.IsFalse(titles.Contains($"Static Page No {i - 1}"));
+            }
+        }
+
+        [Test]
+        public void GetFooterStaticPages_CorrectOrder()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var pages = repo.GetFooterStaticPages().ToList();
+
+            for (int i = 0; i < 3; i++)
+            {
+                Assert.IsTrue(pages[i].FooterPriority < pages[i + 1].FooterPriority);
+            }
+        }
+
+        [Test]
         public void GetStaticPageByUrlTitle_IsThere_ReturnsRealPost()
         {
             EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
@@ -181,6 +211,8 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.IsNotNull(shouldGetPage);
             Assert.AreEqual(shouldGetPage.PageTitle, "Static Page No 5");
         }
+
+
 
 
         private static IQueryable<BlogPostPublished> Generate10Posts()
@@ -229,9 +261,12 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                     PageTitle = $"Static Page No {i}",
                     FullContent = $"Sample Content for sample page no {i}",
                     InMainNav = navToggle,
-                    MainNavPriority = 10 - i
+                    InFooter = !navToggle,
+                    MainNavPriority = 10 - i,
+                    FooterPriority = i
                 };
                 navToggle = !navToggle;
+                
                 pages.Add(sp);
             }
             return pages.AsQueryable();

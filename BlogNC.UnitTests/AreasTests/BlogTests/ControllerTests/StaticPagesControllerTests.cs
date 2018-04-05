@@ -44,7 +44,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
         public void FindStaticPage_PassInNull_MustReturnHome()
         {
             // as of now, this will require that a Home page exist, since the landing page will be 
-            // home
+            // home -- I don't like this and should change this later.
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "TestAppDatabase")
                 .Options;
@@ -62,7 +62,6 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             Assert.IsTrue(((StaticPageTemplateModel)result.Model).Page.PageTitle == "Home");
 
             context.Database.EnsureDeleted();
-
         }
 
 
