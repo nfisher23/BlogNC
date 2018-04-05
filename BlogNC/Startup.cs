@@ -59,6 +59,19 @@ namespace BlogNC
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
+
+
+                routes.MapRoute(
+                    name: "",
+                    template: "Blog/{urlTitle?}",
+                    defaults: new { area = "Blog", controller = "Post", action = "FindPost" });
+
+                routes.MapRoute(
+                    name: "",
+                    template: "NCAdmin/{action=Home}",
+                    defaults: new { area = "NCAdmin", controller = "Admin" });
+
+
                 routes.MapRoute(
                     name: "",
                     template: "{urlTitle?}",
@@ -66,10 +79,6 @@ namespace BlogNC
                         action = "FindStaticPage"});
 
 
-                routes.MapRoute(
-                    name: "",
-                    template: "{area=Blog}/{urlTitle?}",
-                    defaults: new { controller = "Post", action = "FindPost" });
 
             });
         }

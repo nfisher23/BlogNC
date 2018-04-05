@@ -33,8 +33,6 @@ namespace BlogNC.Areas.Blog.Models
             }
         }
 
-
-
         private static IQueryable<BlogPostPublished> GenerateSamplePosts()
         {
             List<BlogPostPublished> posts = new List<BlogPostPublished>();
