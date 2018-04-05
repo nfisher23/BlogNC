@@ -12,9 +12,13 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<StaticPage> StaticPages { get; }
 
         BlogPostPublished GetPostByUrlTitle(string urlTitle);
+        ///<summary>Most recent first</summary>
         IQueryable<BlogPostPublished> GetAllPostsDescending();
         IQueryable<StaticPage> GetNavBarStaticPages();
         IQueryable<StaticPage> GetFooterStaticPages();
         StaticPage GetStaticPageByUrlTitle(string urlTitle);
+
+        IQueryable<BlogPostPublished> GetMostRecentPosts(int numToGet);
+        IQueryable<BlogPostPublished> GetMostRecentDrafts(int numToGet);
     }
 }

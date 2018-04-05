@@ -25,16 +25,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="102.81057"
-     inkscape:cy="-68.851238"
+     inkscape:zoom="5.6"
+     inkscape:cx="29.781609"
+     inkscape:cy="-14.715019"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1702"
      inkscape:window-height="741"
-     inkscape:window-x="3035"
-     inkscape:window-y="1161"
+     inkscape:window-x="1090"
+     inkscape:window-y="1225"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata5">
@@ -54,7 +54,7 @@
      id="layer1"
      transform="translate(0,-284)">
     <rect
-       style="opacity:1;fill:#3c3a3a;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.293;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0.99607843"
+       style="opacity:1;fill:#3c3a3a;fill-opacity:0.05714286;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.293;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:0.99607843"
        id="rect829"
        width="35.360775"
        height="2.6658368"
@@ -62,7 +62,7 @@
        y="293.58597" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.970191px;line-height:1.25;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#020000;fill-opacity:1;stroke:#ffffff;stroke-width:0.355;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.970191px;line-height:1.25;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.275;stroke-opacity:0;stroke-miterlimit:4;stroke-dasharray:none;"
        x="20.870066"
        y="293.4436"
        id="text825"><tspan
@@ -70,10 +70,10 @@
          id="tspan823"
          x="20.870066"
          y="293.4436"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.970191px;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#020000;fill-opacity:1;stroke:#ffffff;stroke-width:0.355;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;">NC</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.970191px;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.275;stroke-opacity:0;stroke-miterlimit:4;stroke-dasharray:none;">NC</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.46766853px;line-height:1.25;font-family:'Gentium Basic';-inkscape-font-specification:'Gentium Basic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#323232;fill-opacity:1;stroke:#ffffff;stroke-width:0.234;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.46766853px;line-height:1.25;font-family:'Gentium Basic';-inkscape-font-specification:'Gentium Basic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#323232;fill-opacity:0.04489796;stroke:#ffffff;stroke-width:0.234;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;"
        x="0.72834134"
        y="293.36533"
        id="text4522"><tspan
@@ -81,11 +81,11 @@
          id="tspan4520"
          x="0.72834134"
          y="293.36533"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.46766853px;font-family:'Gentium Basic';-inkscape-font-specification:'Gentium Basic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#323232;fill-opacity:1;stroke:#ffffff;stroke-width:0.234;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;">Blog</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.46766853px;font-family:'Gentium Basic';-inkscape-font-specification:'Gentium Basic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#323232;fill-opacity:0.04489796;stroke:#ffffff;stroke-width:0.234;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;">Blog</tspan><tspan
          sodipodi:role="line"
          x="0.72834134"
          y="307.69992"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.46766853px;font-family:'Gentium Basic';-inkscape-font-specification:'Gentium Basic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#323232;fill-opacity:1;stroke:#ffffff;stroke-width:0.234;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.46766853px;font-family:'Gentium Basic';-inkscape-font-specification:'Gentium Basic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#323232;fill-opacity:0.04489796;stroke:#ffffff;stroke-width:0.234;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;"
          id="tspan4524" /></text>
   </g>
 </svg>

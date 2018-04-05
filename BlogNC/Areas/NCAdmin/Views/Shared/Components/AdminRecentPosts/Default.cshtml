@@ -1,0 +1,28 @@
+﻿@model AdminRecentPostsViewModel
+@{ }
+
+<div class="card">
+    <a href="#"
+       class="card-link text-dark bg-light">
+        <div class="card-header">
+            <h6>Recent Posts</h6>
+        </div>
+    </a>
+    <div class="card-body">
+        <ul class="list-unstyled">
+            @foreach (var post in Model.Posts)
+            {
+                <a href="#"
+                   class="list-group-item p-0 border-0">
+                    <li class="list-group-item list-group-item-action">
+                        <div class="d-flex">
+                            <h5>@post.PageTitle</h5>
+                            <small class="d-inline-block ml-auto">@post.DateTimePublished.ToString("MM/dd/yyyy H:mm")</small>
+                        </div>
+                    </li>
+                </a>
+            }
+
+        </ul>
+    </div>
+</div>

@@ -29,26 +29,26 @@
     color: #333;
 }
 
-    .sidebar .nav-link .feather {
-        margin-right: 4px;
-        color: #999;
+.sidebar .nav-link .feather {
+    margin-right: 4px;
+    color: #999;
+}
+
+.sidebar .nav-link.active {
+    color: #007bff;
+}
+
+    .sidebar .nav-link:hover .feather,
+    .sidebar .nav-link.active .feather {
+        color: inherit;
     }
 
-    .sidebar .nav-link.active {
-        color: #007bff;
-    }
-
-        .sidebar .nav-link:hover .feather,
-        .sidebar .nav-link.active .feather {
-            color: inherit;
-        }
-
-    .sidebar .nav-link:hover {
-        color: #1d75d4;
-    }
+.sidebar .nav-link:hover {
+    color: #1d75d4;
+}
 
 .sidebar-heading {
-    font-size: .75rem;
+    font-size: .84rem;
     text-transform: uppercase;
 }
 

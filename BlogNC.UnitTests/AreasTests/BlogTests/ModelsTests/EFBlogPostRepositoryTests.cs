@@ -212,6 +212,43 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.AreEqual(shouldGetPage.PageTitle, "Static Page No 5");
         }
 
+        [Test]
+        public void GetMostRecentPosts_CountIsCorrect()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var posts = repo.GetMostRecentPosts(8).ToList();
+            Assert.AreEqual(posts.Count, 8);
+
+
+            posts = repo.GetMostRecentPosts(6).ToList();
+            Assert.AreEqual(posts.Count, 6);
+        }
+
+        [Test]
+        public void GetMostRecentPosts_OrderIsCorrect()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var ordered = repo.GetMostRecentPosts(5).ToList();
+
+            Assert.AreEqual(ordered.Count, 5);
+            for (int i = 0; i < 4; i++)
+            {
+                Assert.IsTrue(ordered[i].DateTimePublished >= ordered[i + 1].DateTimePublished);
+            }
+        }
+
+        [Test]
+        public void GetMostRecentPosts_TooManyInArgument_ReturnsLessThanFull()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var posts = repo.GetMostRecentPosts(25).ToList();
+
+            Assert.IsTrue(posts.Count < 25);
+        }
+
 
 
 

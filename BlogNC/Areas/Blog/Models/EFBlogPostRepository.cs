@@ -48,6 +48,7 @@ namespace BlogNC.Areas.Blog.Models
                 .OrderBy(sp => sp.FooterPriority);
         }
 
+
         public IQueryable<StaticPage> GetNavBarStaticPages()
         {
             return AppDbContext.StaticPages.Where(sp => sp.InMainNav)
@@ -66,6 +67,18 @@ namespace BlogNC.Areas.Blog.Models
             return AppDbContext.StaticPages
                 .Where(p => p.UrlTitle.ToLower() == urlTitle.ToLower())
                 .FirstOrDefault();
+        }
+
+        public IQueryable<BlogPostPublished> GetMostRecentDrafts(int numToGet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<BlogPostPublished> GetMostRecentPosts(int numToGet)
+        {
+            return AppDbContext.Posts
+                .OrderByDescending(p => p.DateTimePublished)
+                .Take(numToGet);
         }
     }
 }
