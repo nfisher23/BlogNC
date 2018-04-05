@@ -150,6 +150,39 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             }
         }
 
+        [Test]
+        public void GetStaticPageByUrlTitle_IsThere_ReturnsRealPost()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var page = repo.GetStaticPageByUrlTitle("Static-Page-No-2");
+
+            Assert.IsNotNull(page);
+            Assert.AreEqual(page.PageTitle, "Static Page No 2");
+        }
+
+        [Test]
+        public void GetStaticPageByUrlTitle_IsNotThere_ReturnsNull()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var notAPage = repo.GetStaticPageByUrlTitle("Not-A-Real-Title");
+
+            Assert.IsNull(notAPage);
+        }
+
+        [Test]
+        public void GetStaticPageByUrlTitle_AnyCaseWorks()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var shouldGetPage = repo.GetStaticPageByUrlTitle("STAtIc-pAgE-NO-5");
+
+            Assert.IsNotNull(shouldGetPage);
+            Assert.AreEqual(shouldGetPage.PageTitle, "Static Page No 5");
+        }
+
+
         private static IQueryable<BlogPostPublished> Generate10Posts()
         {
             List<BlogPostPublished> posts = new List<BlogPostPublished>();

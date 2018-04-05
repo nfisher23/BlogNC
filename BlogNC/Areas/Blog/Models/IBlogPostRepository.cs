@@ -15,5 +15,6 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<BlogPostPublished> GetAllPostsDescending();
         IQueryable<StaticPage> GetNavBarStaticPages();
         IQueryable<StaticPage> GetFooterStaticPages();
+        StaticPage GetStaticPageByUrlTitle(string urlTitle);
     }
 }

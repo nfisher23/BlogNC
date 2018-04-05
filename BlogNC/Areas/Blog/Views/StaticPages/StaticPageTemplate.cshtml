@@ -1,0 +1,9 @@
+﻿@model StaticPageTemplateModel
+
+<div class="row pb-3 mb-4 font-italic border-bottom">
+    <div class="col-lg-8">
+        <h2 class="d-inline">@Model.Page.PageTitle</h2>
+    </div>
+</div>
+
+@Html.Raw(Model.Page.FullContent)

@@ -1,4 +1,5 @@
 ﻿using BlogNC.Areas.Blog.Models;
+using BlogNC.Areas.Blog.Models.PageModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,19 +16,17 @@ namespace BlogNC.Areas.Blog.Controllers
             blogRepository = repo;
         }
 
-        public ViewResult Index()
-        {
-            // temp placeholder to develop other functionality
-            return View();
-        }
-
         public ViewResult FindStaticPage(string urlTitle)
         {
             if (urlTitle == null || urlTitle == "")
-                return View("Index");
+                urlTitle = "Home";
 
-            // final product will look for user created static page entries
-            throw new NotImplementedException();
+            var page = blogRepository.GetStaticPageByUrlTitle(urlTitle);
+            StaticPageTemplateModel model = new StaticPageTemplateModel
+            {
+                Page = page
+            };
+            return View("StaticPageTemplate", model);
         }
     }
 }

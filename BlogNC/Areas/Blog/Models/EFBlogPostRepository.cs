@@ -60,7 +60,11 @@ namespace BlogNC.Areas.Blog.Models
                 .FirstOrDefault();
         }
 
-        
-
+        public StaticPage GetStaticPageByUrlTitle(string urlTitle)
+        {
+            return AppDbContext.StaticPages
+                .Where(p => p.UrlTitle.ToLower() == urlTitle.ToLower())
+                .FirstOrDefault();
+        }
     }
 }

@@ -5,7 +5,9 @@
     <nav class="nav d-flex justify-content-center">
         @foreach (StaticPage p in Model.QualifyingStaticPages)
         {
-            <a class="p-3 mx-3 text-muted" href="#">
+            <a class="p-3 mx-3 text-muted" asp-action="FindStaticPage"
+               asp-controller="StaticPages" asp-area="Blog" 
+               asp-route-urlTitle="@p.UrlTitle">
                @p.PageTitle
 </a>
         }
