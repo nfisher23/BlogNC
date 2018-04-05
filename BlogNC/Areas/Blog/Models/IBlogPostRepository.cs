@@ -12,6 +12,7 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<StaticPage> StaticPages { get; }
 
         BlogPostPublished GetPostByUrlTitle(string urlTitle);
+        BlogPostPublished GetPostById(int publishedPostId);
         ///<summary>Most recent first</summary>
         IQueryable<BlogPostPublished> GetAllPostsDescending();
         IQueryable<StaticPage> GetNavBarStaticPages();
@@ -22,6 +23,7 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
         ///<summary>Lowest number (most important) first</summary>
         IQueryable<StaticPage> GetStaticPagesByPriorityAscending();
+
 
     }
 }

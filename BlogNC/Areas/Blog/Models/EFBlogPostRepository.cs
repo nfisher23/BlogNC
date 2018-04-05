@@ -87,5 +87,12 @@ namespace BlogNC.Areas.Blog.Models
             return AppDbContext.StaticPages
                 .OrderBy(sp => sp.MainNavPriority);
         }
+
+        public BlogPostPublished GetPostById(int publishedPostId)
+        {
+            return AppDbContext.Posts
+                .Where(post => post.BlogPostTemplateId == publishedPostId)
+                .FirstOrDefault();
+        }
     }
 }

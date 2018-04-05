@@ -309,6 +309,41 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                
         }
 
+        [Test]
+        public void GetPostById_IdExists_Retrieves()
+        {
+            var published = new BlogPostPublished
+            {
+                PageTitle = "temp",
+                BlogPostTemplateId = 15000
+            };
+            SharedDbContext.Posts.Add(published);
+            SharedDbContext.SaveChanges();
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var post = repo.GetPostById(15000);
+
+            Assert.IsNotNull(published);
+
+            Assert.AreEqual(published, post);
+        }
+
+        [Test]
+        public void GetPostById_IdDoesNotExist_ReturnsNull()
+        {
+            var published = new BlogPostPublished
+            {
+                PageTitle = "temp",
+                BlogPostTemplateId = 15000
+            };
+            SharedDbContext.Posts.Add(published);
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var post = repo.GetPostById(15005);
+
+            Assert.IsNull(post);
+        }
+
 
 
 
