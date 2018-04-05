@@ -20,5 +20,8 @@ namespace BlogNC.Areas.Blog.Models
 
         IQueryable<BlogPostPublished> GetMostRecentPosts(int numToGet);
         IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
+        ///<summary>Lowest number (most important) first</summary>
+        IQueryable<StaticPage> GetStaticPagesByPriorityAscending();
+
     }
 }

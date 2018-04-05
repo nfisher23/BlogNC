@@ -81,5 +81,11 @@ namespace BlogNC.Areas.Blog.Models
                 .OrderByDescending(p => p.DateTimePublished)
                 .Take(numToGet);
         }
+
+        public IQueryable<StaticPage> GetStaticPagesByPriorityAscending()
+        {
+            return AppDbContext.StaticPages
+                .OrderBy(sp => sp.MainNavPriority);
+        }
     }
 }

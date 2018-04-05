@@ -1,0 +1,26 @@
+﻿@model AdminStaticPagesViewModel
+
+<div class="card col p-0 mx-4 my-4">
+    <a href="#"
+       class="card-link text-dark bg-light">
+        <div class="card-header pt-3 pb-2">
+            <h4>Static Pages</h4>
+        </div>
+    </a>
+    <div class="card-body">
+        <ul class="list-unstyled">
+            @foreach (var sp in Model.AllPages)
+            {
+                <a href="#"
+                   class="list-group-item p-0 border-0">
+                    <li class="list-group-item list-group-item-action">
+                        <div class="d-flex">
+                            <h5>@sp.PageTitle</h5>
+                        </div>
+                    </li>
+                </a>
+            }
+
+        </ul>
+    </div>
+</div>

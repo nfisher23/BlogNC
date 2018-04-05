@@ -285,6 +285,31 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.IsTrue(drafts.Count < 25);
         }
 
+        [Test]
+        public void GetStaticPagesByPriorityAscending_GetsAllPages()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var pages = repo.GetStaticPagesByPriorityAscending();
+
+            Assert.AreEqual(pages.Count(), 9);
+        }
+
+        [Test]
+        public void GetStaticPagesByPriorityAscending_OrderedByMainNav()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var pages = repo.GetStaticPagesByPriorityAscending().ToList();
+
+            for (int i = 0; i < pages.Count; i++)
+            {
+                Assert.IsTrue(pages[i].MainNavPriority <= pages[i].MainNavPriority);
+            }
+               
+        }
+
+
 
 
 
