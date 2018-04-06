@@ -16,5 +16,14 @@ namespace BlogNC.Areas.Blog.Models
         public DateTime TimeStarted { get; }
 
         public DateTime LastEdit { get; set; }
+
+        public bool UpdatePost(BlogPostDraft newData)
+        {
+            if (base.UpdatePost(newData) == false)
+                return false;
+
+            LastEdit = newData.LastEdit;
+            return true;
+        }
     }
 }

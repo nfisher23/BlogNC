@@ -13,6 +13,8 @@ namespace BlogNC.Areas.Blog.Models
 
         BlogPostPublished GetPostByUrlTitle(string urlTitle);
         BlogPostPublished GetPostById(int publishedPostId);
+        BlogPostDraft GetDraftById(int draftId);
+
         ///<summary>Most recent first</summary>
         IQueryable<BlogPostPublished> GetAllPostsDescending();
         IQueryable<StaticPage> GetNavBarStaticPages();
@@ -26,5 +28,6 @@ namespace BlogNC.Areas.Blog.Models
 
         ///<summary>True if successful, false if a post with the same title already exists</summary>
         bool SavePublishedPost(BlogPostPublished post);
+        bool SaveDraft(BlogPostDraft draft);
     }
 }

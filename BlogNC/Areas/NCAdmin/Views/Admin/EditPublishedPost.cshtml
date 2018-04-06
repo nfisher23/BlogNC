@@ -13,12 +13,17 @@
         <input asp-for="Post.PageTitle" class="form-control" />
     </div>
     <div class="form-group">
+        <label asp-for="Post.Author"></label>
+        <div><span asp-validation-for="Post.Author" class="text-danger"></span></div>
+        <input asp-for="Post.Author" class="form-control" />
+    </div>
+    <div class="form-group">
         <div class="form-row">
             <div class="col-md-4 col-lg-3">
                 <label asp-for="Post.TimeOfDayPublished"></label>
                 <div><span asp-validation-for="Post.TimeOfDayPublished" class="text-danger"></span></div>
-                <!--Not binding to time of day by default, for currently unknown reason-->
-                <input asp-for="Post.TimeOfDayPublished" class="form-control" />
+                <!--probably will need to write our own tag helper to get it to bind to time-->                
+                <input asp-for="Post.TimeOfDayPublished" class="form-control" type="time"/>
             </div>
             <div class="col-md-4 col-lg-3 mt-4 mt-md-0">
                 <label asp-for="Post.DatePublished"></label>

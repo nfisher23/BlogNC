@@ -337,6 +337,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                 BlogPostTemplateId = 15000
             };
             SharedDbContext.Posts.Add(published);
+            SharedDbContext.SaveChanges();
             EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
 
             var post = repo.GetPostById(15005);
@@ -344,6 +345,43 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.IsNull(post);
         }
 
+        [Test]
+        public void GetDraftById_IdExists_Retrieves()
+        {
+            var draftToSave = new BlogPostDraft
+            {
+                PageTitle = "temp",
+                BlogPostTemplateId = 15000
+            };
+            SharedDbContext.Drafts.Add(draftToSave);
+            SharedDbContext.SaveChanges();
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var draftToRetrieve = repo.GetDraftById(draftToSave.BlogPostTemplateId);
+
+            Assert.IsNotNull(draftToRetrieve);
+
+            Assert.AreEqual(draftToRetrieve, draftToSave);
+        }
+
+        [Test]
+        public void GetDraftById_IdDoesNotExist_ReturnsNull()
+        {
+            var draft = new BlogPostDraft
+            {
+                PageTitle = "temp",
+                BlogPostTemplateId = 15000
+            };
+
+            SharedDbContext.Drafts.Add(draft);
+            SharedDbContext.SaveChanges();
+
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var shouldBeNull = repo.GetDraftById(15005);
+            Assert.IsNull(shouldBeNull);
+        }
+        
         [Test]
         public void SavePublishedPost_ZeroId_AddsNewPost()
         {
@@ -452,7 +490,109 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
 
 
 
+        [Test]
+        public void SaveDraft_ZeroId_AddsNewDraft()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
 
+            BlogPostDraft draft = new BlogPostDraft
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "some new full content for this test",
+                PageTitle = "A Test Page Title"
+            };
+
+            var countBefore = repo.Drafts.Count();
+
+            repo.SaveDraft(draft);
+            Assert.IsTrue(repo.Drafts.Count() > countBefore);
+        }
+
+        [Test]
+        public void SaveDraft_ZeroId_ReturnsTrue()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            BlogPostDraft draft = new BlogPostDraft
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "some new full content for this test",
+                PageTitle = "A Test Page Title"
+            };
+
+            var shouldBeTrue = repo.SaveDraft(draft);
+            Assert.IsTrue(shouldBeTrue);
+        }
+
+
+        [Test]
+        public void SaveDraft_IdZeroAndUrlAlreadyExists_ReturnsFalse()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            BlogPostDraft draft = new BlogPostDraft
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "Whatever",
+                PageTitle = "Draft Title No 4"
+            };
+
+            var shouldBeFalse = repo.SaveDraft(draft);
+            Assert.IsFalse(shouldBeFalse);
+        }
+
+        [Test]
+        public void SaveDraft_IdZeroAndUrlAlreadyExists_CountIsSame()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            BlogPostDraft draft = new BlogPostDraft
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "Whatever",
+                PageTitle = "Draft Title No 7"
+            };
+
+            var countBefore = repo.Drafts.Count();
+            repo.SaveDraft(draft);
+            Assert.AreEqual(countBefore, repo.Drafts.Count());
+        }
+
+        [Test]
+        public void SaveDraft_SaveExistingDraft_CountIsSame()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            var countBefore = repo.Drafts.Count();
+            BlogPostDraft repoDraft = repo.Drafts
+                .Where(d => d.PageTitle.ToLower() == "draft title no 4").FirstOrDefault();
+            int id = repoDraft.BlogPostTemplateId;
+            repoDraft.PageTitle = "A Completely New Page Title";
+            repoDraft.FullContent = "some completely new content";
+
+            repo.SaveDraft(repoDraft);
+
+            Assert.AreEqual(countBefore, repo.Drafts.Count());
+        }
+
+        [Test]
+        public void SaveDraft_SaveExistingDraft_ChangesRecorded()
+        {
+            string newFullContent = "Some completely new full content";
+            string newPageTitle = "Some completely new page title";
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var draftToChange = repo.Drafts.First();
+            int id = draftToChange.BlogPostTemplateId;
+
+            draftToChange.FullContent = newFullContent;
+            draftToChange.PageTitle = newPageTitle;
+
+            repo.SaveDraft(draftToChange);
+
+            var draftToCheck = repo.GetDraftById(id);
+            Assert.AreEqual(draftToChange.PageTitle, newPageTitle);
+            Assert.AreEqual(draftToChange.FullContent, newFullContent);
+        }
 
 
         private static IQueryable<BlogPostPublished> Generate10Posts()

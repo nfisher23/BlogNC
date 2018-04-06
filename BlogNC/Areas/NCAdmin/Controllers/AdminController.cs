@@ -33,7 +33,6 @@ namespace BlogNC.Areas.NCAdmin.Controllers
                     Post = new BlogPostPublished
                     {
                         DateTimePublished = DateTime.Now,
-                        
                     }
                 };
             }
@@ -58,6 +57,50 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             if (blogRepository.SavePublishedPost(post))
             {
                 TempData["message"] = "Blog Post successfully saved to the database";
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                TempData["message"] = "A post with that title already exists. " +
+                    "Your changes could not be saved";
+                ModelState.AddModelError("", "A post with that title already exists");
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ViewResult EditBlogPostDraft(int blogPostDraftId)
+        {
+            var repoDraft = blogRepository.GetDraftById(blogPostDraftId);
+            AdminEditBlogPostDraftModel model;
+            if (repoDraft == null)
+            {
+                model = new AdminEditBlogPostDraftModel
+                {
+                    Draft = new BlogPostDraft()
+                };
+            }
+            else
+            {
+                model = new AdminEditBlogPostDraftModel
+                {
+                    Draft = repoDraft
+                };
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditBlogPostDraft(BlogPostDraft draft)
+        {
+            if (string.IsNullOrEmpty(draft.PageTitle))
+            {
+                ModelState.AddModelError("", "Your draft must have a page title");
+                return View();
+            }
+            if (blogRepository.SaveDraft(draft))
+            {
+                TempData["message"] = "Your draft successfully saved to the database";
                 return RedirectToAction("Home");
             }
             else

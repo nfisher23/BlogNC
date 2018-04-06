@@ -95,6 +95,13 @@ namespace BlogNC.Areas.Blog.Models
                 .FirstOrDefault();
         }
 
+        public BlogPostDraft GetDraftById(int draftId)
+        {
+            return AppDbContext.Drafts
+                .Where(draft => draft.BlogPostTemplateId == draftId)
+                .FirstOrDefault();
+        }
+
         public bool SavePublishedPost(BlogPostPublished post)
         {
             if (post.BlogPostTemplateId == 0)
@@ -117,6 +124,35 @@ namespace BlogNC.Areas.Blog.Models
                 if (postToUpdate != null)
                 {
                     postToUpdate.UpdatePost(post);
+                    AppDbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool SaveDraft(BlogPostDraft draft)
+        {
+            if (draft.BlogPostTemplateId == 0)
+            {
+                var count = AppDbContext.Drafts
+                    .Count(p => p.UrlTitle.ToLower() == draft.UrlTitle.ToLower());
+
+                if (count == 0)
+                {
+                    AppDbContext.Drafts.Add(draft);
+                    AppDbContext.SaveChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                var draftToUpdate = GetDraftById(draft.BlogPostTemplateId);
+                if (draftToUpdate != null)
+                {
+                    draftToUpdate.UpdatePost(draft);
                     AppDbContext.SaveChanges();
                     return true;
                 }

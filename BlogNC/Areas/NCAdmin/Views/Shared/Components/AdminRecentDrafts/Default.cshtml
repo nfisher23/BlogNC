@@ -12,7 +12,9 @@
         <ul class="list-unstyled">
             @foreach (var draft in Model.Drafts)
             {
-                <a href="#"
+                <a asp-action="EditBlogPostDraft" asp-area="NCAdmin"
+                   asp-controller="Admin"
+                   asp-route-blogPostDraftId="@draft.BlogPostTemplateId"
                    class="list-group-item p-0 border-0">
                     <li class="list-group-item list-group-item-action">
                         <div class="d-flex">
