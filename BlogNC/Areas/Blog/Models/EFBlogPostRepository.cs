@@ -159,5 +159,14 @@ namespace BlogNC.Areas.Blog.Models
                 return false;
             }
         }
+
+        public void UnPublishPostToDraft(BlogPostPublished published)
+        {
+            AppDbContext.Posts.Remove(published);
+            var draft = new BlogPostDraft();
+            draft.UnPublishToDraft(published);
+            AppDbContext.Drafts.Add(draft);
+            AppDbContext.SaveChanges();
+        }
     }
 }

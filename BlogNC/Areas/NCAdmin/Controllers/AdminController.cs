@@ -47,8 +47,9 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditPublishedPost(BlogPostPublished post)
+        public IActionResult EditPublishedPost(AdminEditPostPublishedModel model)
         {
+            var post = model.Post;
             if (string.IsNullOrEmpty(post.PageTitle))
             {
                 ModelState.AddModelError("", "Your blog post must have a page title");
@@ -91,8 +92,9 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditBlogPostDraft(BlogPostDraft draft)
+        public IActionResult EditBlogPostDraft(AdminEditBlogPostDraftModel model)
         {
+            var draft = model.Draft;
             if (string.IsNullOrEmpty(draft.PageTitle))
             {
                 ModelState.AddModelError("", "Your draft must have a page title");
@@ -109,6 +111,22 @@ namespace BlogNC.Areas.NCAdmin.Controllers
                     "Your changes could not be saved";
                 ModelState.AddModelError("", "A post with that title already exists");
                 return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UnPublishPost(AdminEditPostPublishedModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                blogRepository.UnPublishPostToDraft(model.Post);
+                TempData["message"] = "The selected post was successfully moved to drafts";
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                TempData["message"] = "Your request could not be completed";
+                return View(nameof(EditPublishedPost),model);
             }
         }
     }

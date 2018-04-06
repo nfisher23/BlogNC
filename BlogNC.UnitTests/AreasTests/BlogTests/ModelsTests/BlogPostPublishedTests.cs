@@ -12,15 +12,19 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
         [Test]
         public void UpdatePost_UpdatesNewValsAndReturnsTrue()
         {
-            BlogPostPublished p1 = new BlogPostPublished();
-            p1.BlogPostTemplateId = 19;
-            p1.TimeOfDayPublished = new TimeSpan(5, 0, 0);
-            p1.DatePublished = new DateTime(2017, 6, 1);
+            BlogPostPublished p1 = new BlogPostPublished
+            {
+                BlogPostTemplateId = 19,
+                TimeOfDayPublished = new TimeSpan(5, 0, 0),
+                DatePublished = new DateTime(2017, 6, 1)
+            };
 
-            BlogPostPublished p2 = new BlogPostPublished();
-            p2.BlogPostTemplateId = 19;
             var time2 = new TimeSpan(16, 0, 0);
             var date2 = new DateTime(2017, 10, 1);
+            BlogPostPublished p2 = new BlogPostPublished
+            {
+                BlogPostTemplateId = 19
+            };
             p2.TimeOfDayPublished = time2;
             p2.DatePublished = date2;
 
@@ -55,5 +59,6 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.AreNotEqual(p1.TimeOfDayPublished, time2);
             Assert.AreNotEqual(p1.DatePublished, date2);
         }
+
     }
 }

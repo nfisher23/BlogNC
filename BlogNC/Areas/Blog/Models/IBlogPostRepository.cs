@@ -11,23 +11,27 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<BlogPostDraft> Drafts { get; }
         IQueryable<StaticPage> StaticPages { get; }
 
-        BlogPostPublished GetPostByUrlTitle(string urlTitle);
-        BlogPostPublished GetPostById(int publishedPostId);
-        BlogPostDraft GetDraftById(int draftId);
-
         ///<summary>Most recent first</summary>
         IQueryable<BlogPostPublished> GetAllPostsDescending();
+        BlogPostPublished GetPostByUrlTitle(string urlTitle);
+        BlogPostPublished GetPostById(int publishedPostId);
+        IQueryable<BlogPostPublished> GetMostRecentPosts(int numToGet);
+        ///<summary>True if successful, false if a post with the same title already exists</summary>
+        bool SavePublishedPost(BlogPostPublished post);
+        void UnPublishPostToDraft(BlogPostPublished published);
+
+        IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
+        BlogPostDraft GetDraftById(int draftId);
+        bool SaveDraft(BlogPostDraft draft);
+        
+
+
         IQueryable<StaticPage> GetNavBarStaticPages();
         IQueryable<StaticPage> GetFooterStaticPages();
         StaticPage GetStaticPageByUrlTitle(string urlTitle);
-
-        IQueryable<BlogPostPublished> GetMostRecentPosts(int numToGet);
-        IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
         ///<summary>Lowest number (most important) first</summary>
         IQueryable<StaticPage> GetStaticPagesByPriorityAscending();
 
-        ///<summary>True if successful, false if a post with the same title already exists</summary>
-        bool SavePublishedPost(BlogPostPublished post);
-        bool SaveDraft(BlogPostDraft draft);
+
     }
 }

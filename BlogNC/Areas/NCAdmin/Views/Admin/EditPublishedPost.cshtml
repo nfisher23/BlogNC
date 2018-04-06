@@ -42,6 +42,7 @@
         <input class="btn btn-outline-primary my-4 mt-sm-0" type="submit" value="Save Post" asp-action="EditPublishedPost" />
         <a asp-action="Home" asp-controller="Admin" asp-area="NCAdmin"
            class="btn btn-danger mx-sm-5 my-4 mt-sm-0">Cancel</a>
-        <input class="btn btn-outline-danger my-4 mt-sm-0" type="submit" value="Unpublish (Send to Drafts)" href="#" />
+        <input class="btn btn-outline-danger my-4 mt-sm-0" type="submit" value="Unpublish (Send to Drafts)"
+               asp-action="UnPublishPost" formmethod="post" />
     </div>
 </form>

@@ -45,5 +45,7 @@ namespace BlogNC.Areas.Blog.Models
             DatePublished = newData.DatePublished;
             return true;
         }
+
+        
     }
 }

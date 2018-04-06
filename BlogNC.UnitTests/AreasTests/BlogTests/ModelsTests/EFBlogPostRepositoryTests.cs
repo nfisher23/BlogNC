@@ -594,6 +594,38 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.AreEqual(draftToChange.FullContent, newFullContent);
         }
 
+        [Test]
+        public void UnPublishPostToDraft_RemovesPost()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var published = repo.Posts.First();
+            var title = published.PageTitle;
+
+            repo.UnPublishPostToDraft(published);
+
+            var shouldBeNull = repo.Posts.Where(p => p.PageTitle == title).FirstOrDefault();
+            Assert.IsNull(shouldBeNull);
+        }
+
+        [Test]
+        public void UnPublishPostToDraft_NewIdInDraft()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var published = repo.Posts.First();
+            var title = published.PageTitle;
+            var id = published.BlogPostTemplateId;
+
+            repo.UnPublishPostToDraft(published);
+
+            var draft = repo.Drafts.Where(p => p.PageTitle == title).FirstOrDefault();
+            Assert.IsNotNull(draft);
+            Assert.AreEqual(draft.PageTitle, title);
+            Assert.AreNotEqual(draft.BlogPostTemplateId, id);
+            Assert.IsTrue(draft.BlogPostTemplateId > 0);
+        }
+
 
         private static IQueryable<BlogPostPublished> Generate10Posts()
         {

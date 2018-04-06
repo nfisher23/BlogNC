@@ -25,5 +25,12 @@ namespace BlogNC.Areas.Blog.Models
             LastEdit = newData.LastEdit;
             return true;
         }
+
+        public void UnPublishToDraft(BlogPostPublished published)
+        {
+            this.BlogPostTemplateId = published.BlogPostTemplateId;
+            base.UpdatePost(published);
+            this.BlogPostTemplateId = 0;
+        }
     }
 }
