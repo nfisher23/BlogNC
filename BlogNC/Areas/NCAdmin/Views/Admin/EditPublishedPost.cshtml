@@ -1,9 +1,11 @@
 ﻿@model AdminEditPostPublishedModel
 
-<form asp-action="EditPost" method="post">
+
+<form asp-action="EditPublishedPost" method="post">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     <input type="hidden" asp-for="Post.BlogPostTemplateId" />
     <div class="form-group border-bottom">
-        <input class="btn btn-outline-primary" type="submit" value="Save Post" asp-action="EditPost" />
+        <input class="btn btn-outline-primary" type="submit" value="Save Post" asp-action="EditPublishedPost" />
     </div>
     <div class="form-group">
         <label asp-for="Post.PageTitle"></label>
@@ -15,7 +17,8 @@
             <div class="col-md-4 col-lg-3">
                 <label asp-for="Post.TimeOfDayPublished"></label>
                 <div><span asp-validation-for="Post.TimeOfDayPublished" class="text-danger"></span></div>
-                <input asp-for="Post.TimeOfDayPublished" class="form-control" type="time" />
+                <!--Not binding to time of day by default, for currently unknown reason-->
+                <input asp-for="Post.TimeOfDayPublished" class="form-control" />
             </div>
             <div class="col-md-4 col-lg-3 mt-4 mt-md-0">
                 <label asp-for="Post.DatePublished"></label>
@@ -30,10 +33,10 @@
         <div><span asp-validation-for="Post.FullContent" class="text-danger"></span></div>
         <textarea asp-for="Post.FullContent" class="rounded form-control" rows="10"></textarea>
     </div>
-    <div class="text-center">
-        <input class="btn btn-outline-primary" type="submit" value="Save Post" asp-action="EditPost" />
+    <div class="text-left justify-content-between">
+        <input class="btn btn-outline-primary my-4 mt-sm-0" type="submit" value="Save Post" asp-action="EditPublishedPost" />
         <a asp-action="Home" asp-controller="Admin" asp-area="NCAdmin"
-           class="btn btn-secondary">Cancel</a>
-        <input class="btn btn-outline-primary" type="submit" value="Unpublish (Send to Drafts)" href="#" />
+           class="btn btn-danger mx-sm-5 my-4 mt-sm-0">Cancel</a>
+        <input class="btn btn-outline-danger my-4 mt-sm-0" type="submit" value="Unpublish (Send to Drafts)" href="#" />
     </div>
 </form>

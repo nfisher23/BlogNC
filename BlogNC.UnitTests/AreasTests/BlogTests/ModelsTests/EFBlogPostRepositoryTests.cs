@@ -344,6 +344,113 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.IsNull(post);
         }
 
+        [Test]
+        public void SavePublishedPost_ZeroId_AddsNewPost()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            BlogPostPublished published = new BlogPostPublished
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "some new full content for this test",
+                PageTitle = "A Test Page Title"
+            };
+
+            var countBefore = repo.Posts.Count();
+
+            repo.SavePublishedPost(published);
+            Assert.IsTrue(repo.Posts.Count() > countBefore);
+        }
+
+        [Test]
+        public void SavePublishedPost_ZeroId_ReturnsTrue()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            BlogPostPublished published = new BlogPostPublished
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "some new full content for this test",
+                PageTitle = "A Test Page Title"
+            };
+
+            var countBefore = repo.Posts.Count();
+
+            var shouldBeTrue = repo.SavePublishedPost(published);
+            Assert.IsTrue(shouldBeTrue);
+        }
+
+        [Test]
+        public void SavePublishedPost_IdZeroAndUrlAlreadyExists_ReturnsFalse()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            BlogPostPublished published = new BlogPostPublished
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "Whatever",
+                PageTitle = "Post Title No 4"
+            };
+
+            var shouldBeFalse = repo.SavePublishedPost(published);
+            Assert.IsFalse(shouldBeFalse);
+        }
+
+        [Test]
+        public void SavePublishedPost_IdZeroAndUrlAlreadyExists_CountIsSame()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            BlogPostPublished published = new BlogPostPublished
+            {
+                BlogPostTemplateId = 0,
+                FullContent = "Whatever",
+                PageTitle = "Post Title No 7"
+            };
+
+            var countBefore = repo.Posts.Count();
+            repo.SavePublishedPost(published);
+            Assert.AreEqual(countBefore, repo.Posts.Count());
+        }
+
+        [Test]
+        public void SavePublishedPost_SaveExistingPost_CountIsSame()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            var countBefore = repo.Posts.Count();
+            BlogPostPublished repoPost = repo.Posts
+                .Where(p => p.PageTitle.ToLower() == "post title no 4").FirstOrDefault();
+            int id = repoPost.BlogPostTemplateId;
+            repoPost.PageTitle = "A Completely New Page Title";
+            repoPost.FullContent = "some completely new content";
+
+            repo.SavePublishedPost(repoPost);
+
+            Assert.AreEqual(countBefore, repo.Posts.Count());
+        }
+
+        [Test]
+        public void SavePublishedPost_SaveExistingPost_ChangesRecorded()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            var countBefore = repo.Posts.Count();
+            BlogPostPublished repoPost = repo.Posts
+                .Where(p => p.PageTitle.ToLower() == "post title no 4").FirstOrDefault();
+            int id = repoPost.BlogPostTemplateId;
+            string newTitle = "A Completely New Page Title";
+            string newContent = "some completely new content";
+
+            repoPost.PageTitle = newTitle;
+            repoPost.FullContent = newContent;
+
+            repo.SavePublishedPost(repoPost);
+
+            var newVals = repo.GetPostById(id);
+            Assert.AreEqual(newTitle, newVals.PageTitle);
+            Assert.AreEqual(newContent, newVals.FullContent);
+        }
+
+
 
 
 

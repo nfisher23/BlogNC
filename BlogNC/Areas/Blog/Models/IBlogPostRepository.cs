@@ -24,6 +24,7 @@ namespace BlogNC.Areas.Blog.Models
         ///<summary>Lowest number (most important) first</summary>
         IQueryable<StaticPage> GetStaticPagesByPriorityAscending();
 
-
+        ///<summary>True if successful, false if a post with the same title already exists</summary>
+        bool SavePublishedPost(BlogPostPublished post);
     }
 }

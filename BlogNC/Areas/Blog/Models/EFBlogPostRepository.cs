@@ -94,5 +94,34 @@ namespace BlogNC.Areas.Blog.Models
                 .Where(post => post.BlogPostTemplateId == publishedPostId)
                 .FirstOrDefault();
         }
+
+        public bool SavePublishedPost(BlogPostPublished post)
+        {
+            if (post.BlogPostTemplateId == 0)
+            {
+                var count = AppDbContext.Posts
+                    .Count(p => p.UrlTitle.ToLower() == post.UrlTitle.ToLower());
+
+                if (count == 0)
+                {
+                    AppDbContext.Posts.Add(post);
+                    AppDbContext.SaveChanges();
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                var postToUpdate = GetPostById(post.BlogPostTemplateId);
+                if (postToUpdate != null)
+                {
+                    postToUpdate.UpdatePost(post);
+                    AppDbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }

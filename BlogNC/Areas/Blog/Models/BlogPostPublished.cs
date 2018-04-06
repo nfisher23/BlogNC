@@ -34,5 +34,16 @@ namespace BlogNC.Areas.Blog.Models
         }
 
         private DateTime _datePublished;
+
+        public bool UpdatePost(BlogPostPublished newData)
+        {
+            if (base.UpdatePost(newData) == false)
+            {
+                return false;
+            }
+            TimeOfDayPublished = newData.TimeOfDayPublished;
+            DatePublished = newData.DatePublished;
+            return true;
+        }
     }
 }

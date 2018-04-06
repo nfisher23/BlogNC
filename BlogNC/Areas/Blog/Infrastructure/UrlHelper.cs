@@ -11,6 +11,8 @@ namespace BlogNC.Areas.Blog.Infrastructure
         public static string GetUrlTitleFromPageTitle(string pageTitle)
         {
             string _urlTitle = "";
+            if (pageTitle == null) return "";
+
             foreach (var letter in pageTitle)
             {
                 if (char.IsLetterOrDigit(letter))

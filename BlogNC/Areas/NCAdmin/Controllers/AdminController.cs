@@ -28,11 +28,13 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             AdminEditPostPublishedModel model;
             if (post == null)
             {
-                ModelState.AddModelError("", "There was an internal error finding your post. " +
-                    "This is either a mistake on our part or you requested a resource that is not there");
                 model = new AdminEditPostPublishedModel
                 {
-                    Post = new BlogPostPublished()
+                    Post = new BlogPostPublished
+                    {
+                        DateTimePublished = DateTime.Now,
+                        
+                    }
                 };
             }
             else
@@ -48,7 +50,23 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         [HttpPost]
         public IActionResult EditPublishedPost(BlogPostPublished post)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(post.PageTitle))
+            {
+                ModelState.AddModelError("", "Your blog post must have a page title");
+                return View();
+            }
+            if (blogRepository.SavePublishedPost(post))
+            {
+                TempData["message"] = "Blog Post successfully saved to the database";
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                TempData["message"] = "A post with that title already exists. " +
+                    "Your changes could not be saved";
+                ModelState.AddModelError("", "A post with that title already exists");
+                return View();
+            }
         }
     }
 }

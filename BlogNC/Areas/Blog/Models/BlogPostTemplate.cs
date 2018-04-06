@@ -60,5 +60,19 @@ namespace BlogNC.Areas.Blog.Models
         {
             return UrlHelper.GetUrlTitleFromPageTitle(currentPageTitle);
         }
+
+        ///<summary>True if post has same ID</summary>
+        public virtual bool UpdatePost(BlogPostTemplate newData)
+        {
+            if (newData.BlogPostTemplateId == this.BlogPostTemplateId)
+            {
+                this.PageTitle = newData.PageTitle;
+                this.FullContent = newData.FullContent;
+                this.Author = newData.Author;
+                Categories = newData.Categories;
+                return true;
+            }
+            return false;
+        }
     }
 }
