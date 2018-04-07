@@ -1,6 +1,7 @@
 ﻿using BlogNC.Areas.Blog.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace BlogNC.Areas.Blog.Models
     {
         public int BlogPostTemplateId { get; set; } // for entity framework
 
+        [Required]
         public string PageTitle
         {
             get

@@ -5,7 +5,8 @@
     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     <input type="hidden" asp-for="Draft.BlogPostTemplateId" />
     <div class="form-group border-bottom">
-        <input class="btn btn-outline-primary" type="submit" value="Save Draft" asp-action="EditBlogPostDraft" />
+        <input class="btn btn-outline-primary btn-lg" type="submit" value="Publish" 
+               asp-action="PublishDraftToPost" />
     </div>
     <div class="form-group">
         <label asp-for="Draft.PageTitle"></label>
@@ -24,7 +25,8 @@
         <textarea asp-for="Draft.FullContent" class="rounded form-control" rows="10"></textarea>
     </div>
     <div class="text-left justify-content-between">
-        <input class="btn btn-outline-primary my-4 mt-sm-0" type="submit" value="Save Draft" asp-action="EditBlogPostDraft" />
+        <input class="btn btn-outline-primary my-4 mt-sm-0" type="submit" 
+               value="Save As Draft" asp-action="EditBlogPostDraft" />
         <a asp-action="Home" asp-controller="Admin" asp-area="NCAdmin"
            class="btn btn-danger mx-sm-5 my-4 mt-sm-0">Cancel</a>
         <input class="btn btn-outline-danger my-4 mt-sm-0" type="submit" 

@@ -9,7 +9,9 @@ namespace BlogNC.Areas.Blog.Models
     public class BlogPostPublished : BlogPostTemplate
     {
         public BlogPostPublished()
-        { }
+        {
+            this.DateTimePublished = DateTime.Now;
+        }
 
         public TimeSpan TimeOfDayPublished { get; set; }
         public DateTime DatePublished
@@ -46,6 +48,12 @@ namespace BlogNC.Areas.Blog.Models
             return true;
         }
 
-        
+        public void PublishDraftToPost(BlogPostDraft draft)
+        {
+            this.BlogPostTemplateId = draft.BlogPostTemplateId;
+            base.UpdatePost(draft);
+            this.BlogPostTemplateId = 0;
+        }
+
     }
 }

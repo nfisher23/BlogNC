@@ -49,22 +49,15 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         [HttpPost]
         public IActionResult EditPublishedPost(AdminEditPostPublishedModel model)
         {
-            var post = model.Post;
-            if (string.IsNullOrEmpty(post.PageTitle))
-            {
-                ModelState.AddModelError("", "Your blog post must have a page title");
-                return View();
-            }
-            if (blogRepository.SavePublishedPost(post))
+            if (ModelState.IsValid 
+                && blogRepository.SavePublishedPost(model.Post))
             {
                 TempData["message"] = "Blog Post successfully saved to the database";
                 return RedirectToAction("Home");
             }
             else
             {
-                TempData["message"] = "A post with that title already exists. " +
-                    "Your changes could not be saved";
-                ModelState.AddModelError("", "A post with that title already exists");
+                TempData["message"] = "Your changes could not be saved";
                 return View();
             }
         }
@@ -102,7 +95,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             }
             if (blogRepository.SaveDraft(draft))
             {
-                TempData["message"] = "Your draft successfully saved to the database";
+                TempData["message"] = "Your draft was successfully saved to the database";
                 return RedirectToAction("Home");
             }
             else
@@ -117,9 +110,10 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         [HttpPost]
         public IActionResult UnPublishPost(AdminEditPostPublishedModel model)
         {
+            var post = model.Post;
             if (ModelState.IsValid)
             {
-                blogRepository.UnPublishPostToDraft(model.Post);
+                blogRepository.UnPublishPostToDraft(post);
                 TempData["message"] = "The selected post was successfully moved to drafts";
                 return RedirectToAction("Home");
             }
@@ -129,5 +123,24 @@ namespace BlogNC.Areas.NCAdmin.Controllers
                 return View(nameof(EditPublishedPost),model);
             }
         }
+
+        [HttpPost] 
+        public IActionResult PublishDraftToPost(AdminEditBlogPostDraftModel model)
+        {
+            var draft = model.Draft;
+            if (ModelState.IsValid)
+            {
+                blogRepository.PublishDraftToPost(draft);
+                TempData["message"] = "Your selected draft was successfull published";
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                TempData["message"] = "Your request could not be completed";
+                return View(nameof(EditBlogPostDraft), model);
+            }
+        }
+
+        
     }
 }

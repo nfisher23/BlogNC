@@ -19,6 +19,7 @@ namespace BlogNC.Areas.Blog.Models
         ///<summary>True if successful, false if a post with the same title already exists</summary>
         bool SavePublishedPost(BlogPostPublished post);
         void UnPublishPostToDraft(BlogPostPublished published);
+        void PublishDraftToPost(BlogPostDraft draft);
 
         IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
         BlogPostDraft GetDraftById(int draftId);

@@ -626,6 +626,35 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.IsTrue(draft.BlogPostTemplateId > 0);
         }
 
+        [Test]
+        public void PublishDraftToPost_AddsToPosts()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var draft = repo.Drafts.First();
+            var title = draft.PageTitle;
+
+            repo.PublishDraftToPost(draft);
+
+            var shouldBePost = repo.Posts.Where(d => d.PageTitle == title).FirstOrDefault();
+            Assert.IsNotNull(shouldBePost);
+        }
+
+        [Test]
+        public void PublishDraftToPost_RemovesFromDrafts()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var draft = repo.Drafts.First();
+            var id = draft.BlogPostTemplateId;
+
+            repo.PublishDraftToPost(draft);
+
+            var shouldBeNull = repo.Drafts.Where(d => d.BlogPostTemplateId == id).FirstOrDefault();
+            Assert.IsNull(shouldBeNull);
+        }
+        
+
 
         private static IQueryable<BlogPostPublished> Generate10Posts()
         {

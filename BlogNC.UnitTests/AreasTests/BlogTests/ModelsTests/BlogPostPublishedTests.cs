@@ -60,5 +60,26 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.AreNotEqual(p1.DatePublished, date2);
         }
 
+        [Test]
+        public void PublishDraftToPost_RetainsValues()
+        {
+            string title = "Some Example Title";
+            string content = "Some Example Full Content";
+            string author = "Steven Jobison";
+
+            var draft = new BlogPostDraft
+            {
+                PageTitle = title,
+                Author = author,
+                FullContent = content
+            };
+
+            var post = new BlogPostPublished();
+            post.PublishDraftToPost(draft);
+
+            Assert.AreEqual(title, post.PageTitle);
+            Assert.AreEqual(content, post.FullContent);
+            Assert.AreEqual(author, post.Author);
+        }
     }
 }

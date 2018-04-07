@@ -62,8 +62,6 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.AreEqual(d1.LastEdit, new DateTime(2017, 9, 1));
         }
 
-
-
         [Test]
         public void UnPublishToDraft_RetainsValues()
         {
