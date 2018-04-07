@@ -653,6 +653,21 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             var shouldBeNull = repo.Drafts.Where(d => d.BlogPostTemplateId == id).FirstOrDefault();
             Assert.IsNull(shouldBeNull);
         }
+
+        [Test]
+        public void DeleteDraft_RemovesFromSet()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var id = repo.Drafts.Select(d => d.BlogPostTemplateId).First();
+            var draft = repo.GetDraftById(id);
+            var title = draft.PageTitle;
+
+            repo.DeleteDraft(draft);
+
+            var shouldBeNull = repo.GetDraftById(id);
+            Assert.IsNull(shouldBeNull);
+        }
         
 
 

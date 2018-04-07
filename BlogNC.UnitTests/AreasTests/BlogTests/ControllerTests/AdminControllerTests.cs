@@ -156,6 +156,20 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             mockRepo.DidNotReceive().PublishDraftToPost(draft);
         }
 
+        [Test]
+        public void DeleteDraft_CallsDeleteDraftRepo()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var draft = new BlogPostDraft { PageTitle = "Something", FullContent = "something..." };
+            mockRepo.SaveDraft(draft);
+
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+            var result = controller.DeleteDraft(new AdminEditBlogPostDraftModel { Draft = draft });
+
+            mockRepo.Received().DeleteDraft(draft);
+        }
+
         private BlogPostPublished ValidPostFactory()
         {
             var post = new BlogPostPublished();

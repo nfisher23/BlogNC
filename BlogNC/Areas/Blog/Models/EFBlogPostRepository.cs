@@ -177,5 +177,11 @@ namespace BlogNC.Areas.Blog.Models
             AppDbContext.Posts.Add(post);
             AppDbContext.SaveChanges();
         }
+
+        public void DeleteDraft(BlogPostDraft draft)
+        {
+            AppDbContext.Drafts.Remove(draft);
+            AppDbContext.SaveChanges();
+        }
     }
 }

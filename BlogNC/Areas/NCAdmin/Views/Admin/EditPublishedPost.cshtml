@@ -5,7 +5,8 @@
     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     <input type="hidden" asp-for="Post.BlogPostTemplateId" />
     <div class="form-group border-bottom">
-        <input class="btn btn-outline-primary" type="submit" value="Save Post" asp-action="EditPublishedPost" />
+        <input class="btn btn-outline-primary" type="submit" value="Save Post" 
+               asp-action="EditPublishedPost" />
     </div>
     <div class="form-group">
         <label asp-for="Post.PageTitle"></label>

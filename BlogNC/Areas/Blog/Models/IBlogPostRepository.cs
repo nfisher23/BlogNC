@@ -20,6 +20,7 @@ namespace BlogNC.Areas.Blog.Models
         bool SavePublishedPost(BlogPostPublished post);
         void UnPublishPostToDraft(BlogPostPublished published);
         void PublishDraftToPost(BlogPostDraft draft);
+        void DeleteDraft(BlogPostDraft draft);
 
         IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
         BlogPostDraft GetDraftById(int draftId);

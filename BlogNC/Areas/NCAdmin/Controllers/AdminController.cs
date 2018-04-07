@@ -131,7 +131,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             if (ModelState.IsValid)
             {
                 blogRepository.PublishDraftToPost(draft);
-                TempData["message"] = "Your selected draft was successfull published";
+                TempData["message"] = "Your draft was successfully published";
                 return RedirectToAction("Home");
             }
             else
@@ -141,6 +141,15 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             }
         }
 
-        
+        [HttpPost]
+        public IActionResult DeleteDraft(AdminEditBlogPostDraftModel model)
+        {
+            var draft = model.Draft;
+            blogRepository.DeleteDraft(draft);
+            TempData["message"] = "Your draft was deleted";
+            return RedirectToAction("Home");
+        }
+
+
     }
 }
