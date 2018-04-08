@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
 {
@@ -203,7 +204,9 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
         public void DeleteStaticPage_CallsDeleteRepo()
         {
             var mockRepo = Substitute.For<IBlogPostRepository>();
-            var page = new StaticPage { PageTitle = "Title", FullContent = "Something" };
+            var page = new StaticPage { StaticPageId = 10, PageTitle = "Title", FullContent = "Something" };
+            mockRepo.GetStaticPageById(page.StaticPageId).Returns(page);
+
 
             var controller = new AdminController(mockRepo);
             controller.TempData = Substitute.For<ITempDataDictionary>();
@@ -211,6 +214,54 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             var result = controller.DeleteStaticPage(new AdminEditStaticPageModel { Page = page });
 
             mockRepo.Received().DeleteStaticPage(page);
+        }
+
+        [Test]
+        public void DeleteStaticPage_HomePagePassedIn_DoesNotCallDeleteRepo()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var page = new StaticPage { StaticPageId = 10, PageTitle = "Title", FullContent = "Something",
+            IsHomePage = true };
+            mockRepo.GetStaticPageById(page.StaticPageId).Returns(page);
+
+
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+
+            var result = controller.DeleteStaticPage(new AdminEditStaticPageModel { Page = page });
+
+
+            mockRepo.DidNotReceive().DeleteStaticPage(page);
+        }
+
+        [Test]
+        public void ManageStaticPages_CallsSavePagesOnAll()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var page1 = new StaticPage
+            {
+                PageTitle = "title2",
+                FullContent = "content"
+            };
+            var page2 = new StaticPage
+            {
+                PageTitle = "title2",
+                FullContent = "content"
+            };
+            var pages = new List<StaticPage>
+            {
+                page1,
+                page2
+            };
+            AdminController controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+            var result = controller.ManageStaticPages(new AdminManageStaticPagesModel
+            {
+                Pages = pages
+            });
+
+            mockRepo.Received().SaveStaticPage(page1);
+            mockRepo.Received().SaveStaticPage(page2);
         }
 
         private BlogPostPublished ValidPostFactory()

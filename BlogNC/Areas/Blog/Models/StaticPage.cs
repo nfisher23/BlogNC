@@ -33,6 +33,8 @@ namespace BlogNC.Areas.Blog.Models
         [Range(0,200, ErrorMessage = "The priority must be between 0 and 200")]
         public int FooterPriority { get; set; } = 100;
 
+        public bool IsHomePage { get; set; } = false;
+
         public void UpdatePage(StaticPage page)
         {
             StaticPageId = page.StaticPageId;
@@ -42,6 +44,7 @@ namespace BlogNC.Areas.Blog.Models
             InFooter = page.InFooter;
             MainNavPriority = page.MainNavPriority;
             FooterPriority = page.FooterPriority;
+            IsHomePage = page.IsHomePage;
         }
     }
 }

@@ -81,7 +81,8 @@ namespace BlogNC.Areas.Blog.Models
                 InMainNav = true,
                 InFooter = true,
                 MainNavPriority = 0,
-                FooterPriority = 0
+                FooterPriority = 0,
+                IsHomePage = true
             });
 
             pages.Add(new StaticPage

@@ -182,7 +182,14 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         [HttpPost]
         public IActionResult DeleteStaticPage(AdminEditStaticPageModel model)
         {
-            var page = model.Page;
+            var page = blogRepository.GetStaticPageById(model.Page.StaticPageId);
+            if (page.IsHomePage)
+            {
+                ModelState.AddModelError("", "You cannot delete the home page. " +
+                    "To Delete this page, first go to the \"Manage Static Pages\" link, " +
+                    "then select a different home page");
+                return View("EditStaticPage");
+            }
             blogRepository.DeleteStaticPage(page);
             TempData["message"] = "Your static page was deleted";
             return RedirectToAction("Home");
@@ -202,13 +209,20 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         [HttpPost]
         public IActionResult ManageStaticPages(AdminManageStaticPagesModel model)
         {
-            var pages = model.Pages;
-            foreach (var p in pages)
+            if (ModelState.IsValid)
             {
-                blogRepository.SaveStaticPage(p);
+                var pages = model.Pages;
+                foreach (var p in pages)
+                {
+                    blogRepository.SaveStaticPage(p);
+                }
+                TempData["message"] = "Your static page configuration was successfully updated";
+                return RedirectToAction(nameof(ManageStaticPages));
             }
-            TempData["message"] = "Your static page configuration was successfully updated";
-            return RedirectToAction(nameof(ManageStaticPages));
+            else
+            {
+                return View(model);
+            }
         }
     }
 }

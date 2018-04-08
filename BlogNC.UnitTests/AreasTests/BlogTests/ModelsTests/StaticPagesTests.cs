@@ -20,7 +20,8 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                 InMainNav = true,
                 FooterPriority = 100,
                 MainNavPriority = 100,
-                StaticPageId = 100
+                StaticPageId = 100,
+                IsHomePage = true
             };
 
             string newtitle = "Title 2";
@@ -30,6 +31,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             int newNavP = 250;
             int newFootP = 25;
             int newID = 13;
+            bool homePage = false;
 
             StaticPage p2 = new StaticPage
             {
@@ -39,7 +41,8 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                 InMainNav = newnav,
                 FooterPriority = newFootP,
                 MainNavPriority = newNavP,
-                StaticPageId = newID
+                StaticPageId = newID,
+                IsHomePage = homePage
             };
 
             p1.UpdatePage(p2);
@@ -51,6 +54,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.AreEqual(newFootP, p1.FooterPriority);
             Assert.AreEqual(newNavP, p1.MainNavPriority);
             Assert.AreEqual(newID, p1.StaticPageId);
+            Assert.AreEqual(homePage, p1.IsHomePage);
         }
     }
 }
