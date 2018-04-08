@@ -1,0 +1,68 @@
+﻿@model AdminManageStaticPagesModel
+@{ int iter = 0; }
+
+@if (TempData.Keys.Count > 0
+        && TempData.Keys.Contains("message"))
+{
+    <div class="alert alert-info" role="alert">
+        <h5>
+            Message: @TempData["message"]
+        </h5>
+    </div>
+
+}
+
+<div class="row bg-light m-0 pt-3 border-bottom">
+    <h3 class="mb-3 p-4">Static Pages</h3>
+</div>
+
+<form asp-action="ManageStaticPages" method="post">
+    <table class="table table-responsive-sm table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title (Click to edit content)</th>
+                <th scope="col">In Main Nav?</th>
+                <th scope="col">Nav Priority</th>
+                <th scope="col">In Footer?</th>
+                <th scope="col">Footer Priority</th>
+                <th scope="col">Landing Page</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Pages.Count; i++)
+            {
+                var sp = Model.Pages[i];
+                <tr>
+
+                    <td scope="row">@i</td>
+                    <td>
+                        <input type="hidden" asp-for="Pages[i].PageTitle" />
+                        <input type="hidden" asp-for="Pages[i].StaticPageId" />
+                        <a asp-action="EditStaticPage" asp-controller="Admin"
+                           asp-area="NCAdmin" class="nav-link text-secondary h4">
+                            @sp.PageTitle
+                        </a>
+                    </td>
+                    <td class="form-group">
+                        <input asp-for="Pages[i].InMainNav" class="form-control-lg" />
+                    </td>
+                    <td class="form-group">
+                        <input asp-for="Pages[i].MainNavPriority" class="form-control-sm" />
+                    </td>
+                    <td>
+                        <input asp-for="Pages[i].InFooter" class="form-control-lg" />
+
+                    </td>
+                    <td>
+                        <input asp-for="Pages[i].FooterPriority" class="form-control-sm" />
+                    </td>
+                    <td>
+                        <!--Insert landing page radio-->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="submit" value="Submit Changes" class="btn btn-outline-info btn-lg" />
+</form>

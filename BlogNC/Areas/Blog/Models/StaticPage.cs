@@ -28,10 +28,10 @@ namespace BlogNC.Areas.Blog.Models
         public bool InFooter { get; set; }
         ///<summary>Lower number means earlier on the list</summary>
         [Range(0,200, ErrorMessage = "The priority must be between 0 and 200")]
-        public int? MainNavPriority { get; set; } = 100;
+        public int MainNavPriority { get; set; } = 100;
         ///<summary>Lower number means earlier on the list</summary>
         [Range(0,200, ErrorMessage = "The priority must be between 0 and 200")]
-        public int? FooterPriority { get; set; } = 100;
+        public int FooterPriority { get; set; } = 100;
 
         public void UpdatePage(StaticPage page)
         {

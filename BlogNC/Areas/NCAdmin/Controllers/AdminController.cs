@@ -188,6 +188,27 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             return RedirectToAction("Home");
         }
 
+        [HttpGet]
+        public ViewResult ManageStaticPages()
+        {
+            var pages = blogRepository.GetStaticPagesByPriorityAscending();
+            var model = new AdminManageStaticPagesModel
+            {
+                Pages = pages.ToList()
+            };
+            return View(model);
+        }
 
+        [HttpPost]
+        public IActionResult ManageStaticPages(AdminManageStaticPagesModel model)
+        {
+            var pages = model.Pages;
+            foreach (var p in pages)
+            {
+                blogRepository.SaveStaticPage(p);
+            }
+            TempData["message"] = "Your static page configuration was successfully updated";
+            return RedirectToAction(nameof(ManageStaticPages));
+        }
     }
 }

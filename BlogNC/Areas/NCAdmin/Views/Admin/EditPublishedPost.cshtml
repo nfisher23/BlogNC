@@ -1,11 +1,21 @@
 ﻿@model AdminEditPostPublishedModel
 
+@if (TempData.Keys.Count > 0
+         && TempData.Keys.Contains("message"))
+{
+    <div class="alert alert-info" role="alert">
+        <h5>
+            Message: @TempData["message"]
+        </h5>
+    </div>
+
+}
 
 <form asp-action="EditPublishedPost" method="post">
     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     <input type="hidden" asp-for="Post.BlogPostTemplateId" />
     <div class="form-group border-bottom">
-        <input class="btn btn-outline-primary" type="submit" value="Save Post" 
+        <input class="btn btn-outline-primary" type="submit" value="Save Post"
                asp-action="EditPublishedPost" />
     </div>
     <div class="form-group">
@@ -23,8 +33,8 @@
             <div class="col-md-4 col-lg-3">
                 <label asp-for="Post.TimeOfDayPublished"></label>
                 <div><span asp-validation-for="Post.TimeOfDayPublished" class="text-danger"></span></div>
-                <!--probably will need to write our own tag helper to get it to bind to time-->                
-                <input asp-for="Post.TimeOfDayPublished" class="form-control" type="time"/>
+                <!--probably will need to write our own tag helper to get it to bind to time-->
+                <input asp-for="Post.TimeOfDayPublished" class="form-control" type="time" />
             </div>
             <div class="col-md-4 col-lg-3 mt-4 mt-md-0">
                 <label asp-for="Post.DatePublished"></label>
