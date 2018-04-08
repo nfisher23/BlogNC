@@ -59,8 +59,6 @@ namespace BlogNC
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
-
-
                 routes.MapRoute(
                     name: "",
                     template: "Blog/{urlTitle?}",

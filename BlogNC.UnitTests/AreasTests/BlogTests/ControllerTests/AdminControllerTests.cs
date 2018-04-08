@@ -193,9 +193,24 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             var controller = new AdminController(mockRepo);
             controller.TempData = Substitute.For<ITempDataDictionary>();
             controller.ModelState.AddModelError("", "error");
+
             var result = controller.EditStaticPage(new AdminEditStaticPageModel { Page = page });
 
             mockRepo.DidNotReceive().SaveStaticPage(page);
+        }
+
+        [Test]
+        public void DeleteStaticPage_CallsDeleteRepo()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var page = new StaticPage { PageTitle = "Title", FullContent = "Something" };
+
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+
+            var result = controller.DeleteStaticPage(new AdminEditStaticPageModel { Page = page });
+
+            mockRepo.Received().DeleteStaticPage(page);
         }
 
         private BlogPostPublished ValidPostFactory()

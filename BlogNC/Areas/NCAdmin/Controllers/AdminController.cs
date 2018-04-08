@@ -179,6 +179,15 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult DeleteStaticPage(AdminEditStaticPageModel model)
+        {
+            var page = model.Page;
+            blogRepository.DeleteStaticPage(page);
+            TempData["message"] = "Your static page was deleted";
+            return RedirectToAction("Home");
+        }
+
 
     }
 }

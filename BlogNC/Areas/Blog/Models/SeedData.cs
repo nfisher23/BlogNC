@@ -100,7 +100,7 @@ namespace BlogNC.Areas.Blog.Models
                 FullContent = "Contact Information for BlogNC...",
                 InMainNav = false,
                 InFooter = true,
-                MainNavPriority = 1000,
+                MainNavPriority = 100,
                 FooterPriority = 2
             });
 
@@ -111,7 +111,7 @@ namespace BlogNC.Areas.Blog.Models
                 InMainNav = true,
                 InFooter = false,
                 MainNavPriority = 2,
-                FooterPriority = 1000
+                FooterPriority = 100
             });
 
 
