@@ -11,7 +11,7 @@
         <ul class="list-unstyled">
             @foreach (var sp in Model.AllPages)
             {
-                <a href="#"
+                <a asp-action="EditStaticPage" asp-route-staticPageId="@sp.StaticPageId"
                    class="list-group-item p-0 border-0">
                     <li class="list-group-item list-group-item-action">
                         <div class="d-flex">

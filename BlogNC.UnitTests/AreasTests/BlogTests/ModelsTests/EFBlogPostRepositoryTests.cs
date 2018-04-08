@@ -668,7 +668,160 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             var shouldBeNull = repo.GetDraftById(id);
             Assert.IsNull(shouldBeNull);
         }
-        
+
+        [Test]
+        public void GetStaticPageById_GetsRealId()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var page1 = repo.StaticPages.First();
+            var id = page1.StaticPageId;
+
+            var page2 = repo.GetStaticPageById(id);
+
+            Assert.AreEqual(page1, page2);
+        }
+
+        [Test]
+        public void GetStaticPageById_NoRealId_ReturnsNull()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var page = repo.GetStaticPageById(-4);
+
+            Assert.IsNull(page);
+        }
+
+
+
+
+        [Test]
+        public void SaveStaticPage_ZeroId_AddsNew()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            var page = new StaticPage
+            {
+                PageTitle = "Title",
+                StaticPageId = 0,
+                FullContent = "content"
+            };
+
+            var countBefore = repo.StaticPages.Count();
+            repo.SaveStaticPage(page);
+            Assert.IsTrue(repo.StaticPages.Count() > countBefore);
+        }
+
+        [Test]
+        public void SaveStaticPage_ZeroId_ReturnsTrue()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            var page = new StaticPage
+            {
+                PageTitle = "Title",
+                StaticPageId = 0,
+                FullContent = "content"
+            };
+
+            var result = repo.SaveStaticPage(page);
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void SaveStaticPage_IdZeroAndUrlAlreadyExists_ReturnsFalse()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            var page = new StaticPage
+            {
+                PageTitle = "Static Page No 4",
+                StaticPageId = 0,
+                FullContent = "content"
+            };
+
+            var result = repo.SaveStaticPage(page);
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void SaveStaticPage_IdZeroAndUrlAlreadyExists_CountIsSame()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            var page = new StaticPage
+            {
+                PageTitle = "Static Page No 4",
+                StaticPageId = 0,
+                FullContent = "content"
+            };
+            var countBefore = repo.StaticPages.Count();
+            var result = repo.SaveStaticPage(page);
+
+            Assert.AreEqual(countBefore, repo.StaticPages.Count());
+        }
+
+        [Test]
+        public void SaveStaticPage_SaveExistingPage_CountIsSame()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            string newFullContent = "Some completely new full content";
+            string newPageTitle = "Some completely new page title";
+
+            var page = repo.StaticPages.First();
+
+            page.PageTitle = newPageTitle;
+            page.FullContent = newFullContent;
+
+            var count = repo.StaticPages.Count();
+            repo.SaveStaticPage(page);
+
+            Assert.AreEqual(count, repo.StaticPages.Count());
+        }
+
+        [Test]
+        public void SaveStaticPage_SaveExistingPage_ChangesRecorded()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+            string newFullContent = "Some completely new full content";
+            string newPageTitle = "Some completely new page title";
+
+            var page = repo.StaticPages.First();
+
+            page.PageTitle = newPageTitle;
+            page.FullContent = newFullContent;
+
+            var count = repo.StaticPages.Count();
+            repo.SaveStaticPage(page);
+
+            var newPage = repo.StaticPages.Where(sp => sp.PageTitle == newPageTitle).FirstOrDefault();
+
+            Assert.IsNotNull(newPage);
+            Assert.AreEqual(newPage.PageTitle, newPageTitle);
+            Assert.AreEqual(newPage.FullContent, newFullContent);
+        }
+
+        [Test]
+        public void DeleteStaticPage_Removes()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var page = repo.StaticPages.First();
+            var id = page.StaticPageId;
+            repo.DeleteStaticPage(page);
+
+            var shouldBeNull = repo.GetStaticPageById(id);
+            Assert.IsNull(shouldBeNull);
+        }
+
+        [Test]
+        public void DeleteStaticPage_CountIsLess()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var page = repo.StaticPages.First();
+
+            var countBefore = repo.StaticPages.Count();
+            repo.DeleteStaticPage(page);
+
+            Assert.IsTrue(repo.StaticPages.Count() < countBefore);
+        }
 
 
         private static IQueryable<BlogPostPublished> Generate10Posts()
@@ -723,7 +876,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                     FooterPriority = i
                 };
                 navToggle = !navToggle;
-                
+
                 pages.Add(sp);
             }
             return pages.AsQueryable();

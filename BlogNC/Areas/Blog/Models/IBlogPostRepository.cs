@@ -31,8 +31,11 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<StaticPage> GetNavBarStaticPages();
         IQueryable<StaticPage> GetFooterStaticPages();
         StaticPage GetStaticPageByUrlTitle(string urlTitle);
+        StaticPage GetStaticPageById(int id);
         ///<summary>Lowest number (most important) first</summary>
         IQueryable<StaticPage> GetStaticPagesByPriorityAscending();
+        bool SaveStaticPage(StaticPage page);
+        void DeleteStaticPage(StaticPage page);
 
 
     }

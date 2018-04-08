@@ -183,5 +183,45 @@ namespace BlogNC.Areas.Blog.Models
             AppDbContext.Drafts.Remove(draft);
             AppDbContext.SaveChanges();
         }
+
+        public StaticPage GetStaticPageById(int id)
+        {
+            return AppDbContext.StaticPages
+                .Where(sp => sp.StaticPageId == id).FirstOrDefault();
+        }
+
+        public bool SaveStaticPage(StaticPage page)
+        {
+            if (page.StaticPageId == 0)
+            {
+                var count = AppDbContext.StaticPages
+                    .Count(sp => sp.UrlTitle.ToLower() == page.UrlTitle.ToLower());
+
+                if (count == 0)
+                {
+                    AppDbContext.StaticPages.Add(page);
+                    AppDbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                var pageToUpdate = GetStaticPageById(page.StaticPageId);
+                if (pageToUpdate != null)
+                {
+                    pageToUpdate.UpdatePage(page);
+                    AppDbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public void DeleteStaticPage(StaticPage page)
+        {
+            AppDbContext.StaticPages.Remove(page);
+            AppDbContext.SaveChanges();
+        }
     }
 }

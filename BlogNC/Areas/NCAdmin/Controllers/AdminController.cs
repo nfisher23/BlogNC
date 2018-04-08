@@ -1,6 +1,7 @@
 ﻿using BlogNC.Areas.Blog.Models;
 using BlogNC.Areas.NCAdmin.Models.PageModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,6 +149,34 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             blogRepository.DeleteDraft(draft);
             TempData["message"] = "Your draft was deleted";
             return RedirectToAction("Home");
+        }
+
+        [HttpGet]
+        public ViewResult EditStaticPage(int staticPageId)
+        {
+            var page = blogRepository.GetStaticPageById(staticPageId);
+            var model = new AdminEditStaticPageModel
+            {
+                Page = page ?? new StaticPage()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditStaticPage(AdminEditStaticPageModel model)
+        {
+            var page = model.Page;
+            if (ModelState.IsValid)
+            {
+                blogRepository.SaveStaticPage(page);
+                TempData["message"] = "Your static page was saved to your database";
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                TempData["message"] = "Your requested action could not be completed";
+                return View();
+            }
         }
 
 

@@ -170,6 +170,34 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             mockRepo.Received().DeleteDraft(draft);
         }
 
+        [Test]
+        public void EditStaticPage_ValidState_SavesInRepo()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var page = new StaticPage { PageTitle = "Title", FullContent = "Content" };
+            mockRepo.SaveStaticPage(page);
+
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+            var result = controller.EditStaticPage(new AdminEditStaticPageModel { Page = page });
+
+            mockRepo.Received().SaveStaticPage(page);
+        }
+
+        [Test]
+        public void EditStaticPage_InvalidState_DoesNotSaveInRepo()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var page = new StaticPage { PageTitle = "", FullContent = "" };
+
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+            controller.ModelState.AddModelError("", "error");
+            var result = controller.EditStaticPage(new AdminEditStaticPageModel { Page = page });
+
+            mockRepo.DidNotReceive().SaveStaticPage(page);
+        }
+
         private BlogPostPublished ValidPostFactory()
         {
             var post = new BlogPostPublished();
