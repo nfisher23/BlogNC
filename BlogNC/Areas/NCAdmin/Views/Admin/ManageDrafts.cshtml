@@ -1,0 +1,101 @@
+﻿@model AdminManageDraftsModel
+
+@{ int iter = 0; }
+
+@if (TempData.Keys.Count > 0
+     && TempData.Keys.Contains("message"))
+{
+    <div class="alert alert-info" role="alert">
+        <h5>
+            Message: @TempData["message"]
+        </h5>
+    </div>
+
+}
+<div asp-validation-summary="All" class="text-danger text-lg-center"> </div>
+
+<div class="row bg-light m-0 pt-3 border-bottom">
+    <h3 class="mb-3 p-4">Published Posts</h3>
+</div>
+
+<form asp-action="ManagePublishedPosts" method="post">
+    <table class="table table-responsive-sm table-striped d-none d-md-table">
+        <thead>
+            <tr>
+                <th scope="col">Last Edit</th>
+                <th scope="col">Title</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete Draft</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Drafts.Count; i++)
+            {
+                var draft = Model.Drafts[i];
+                <tr>
+
+                    <td scope="row">
+                        <span class="h6">
+                            @draft.LastEdit.ToString()
+                        </span>
+                    </td>
+                    <td>
+                        <input type="hidden" asp-for="Drafts[i].PageTitle" />
+                        <input type="hidden" asp-for="Drafts[i].BlogPostTemplateId" />
+                        <span class="nav-link text-secondary h4">
+                            @draft.PageTitle
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-info"
+                           asp-route-blogPostDraftId="@draft.BlogPostTemplateId"
+                           asp-action="EditBlogPostDraft">
+                            Edit Draft
+                        </a>
+                    </td>
+                    <td>
+                        <input class="btn btn-danger" type="submit" formmethod="post"
+                               asp-action="DeleteDraftById" 
+                               asp-route-blogPostDraftId="@draft.BlogPostTemplateId"
+                               value="Delete Draft" />
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<form>
+    <table class="table table-bordered table-striped d-table d-md-none">
+        <thead>
+            <tr>
+                <th scope="col">Last Edit</th>
+                <th scope="col">Title (Click to Edit)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Drafts.Count; i++)
+            {
+                var draft = Model.Drafts[i];
+                <tr>
+
+                    <td scope="row">
+                        <span class="h6">
+                            @draft.LastEdit.ToShortDateString()
+                        </span>
+                    </td>
+                    <td>
+                        <input type="hidden" asp-for="Drafts[i].PageTitle" />
+                        <input type="hidden" asp-for="Drafts[i].BlogPostTemplateId" />
+                        <a class="text-muted h4"
+                           asp-route-blogPostDraftId="@draft.BlogPostTemplateId"
+                           asp-action="EditBlogPostDraft">
+                            @draft.PageTitle
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

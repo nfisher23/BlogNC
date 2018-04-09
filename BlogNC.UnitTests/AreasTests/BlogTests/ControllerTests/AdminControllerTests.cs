@@ -264,6 +264,24 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             mockRepo.Received().UnPublishPostToDraft(fakePost);
         }
 
+        [Test]
+        public void DeleteDraftById_RetrievesAndDeletesByIdViaRepo()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var fakeDraft = new BlogPostDraft
+            {
+                PageTitle = "Fake Title",
+                FullContent = "Some Fake Full Content"
+            };
+            mockRepo.GetDraftById(10).Returns(fakeDraft);
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+            controller.DeleteDraftById(10);
+
+            mockRepo.Received().GetDraftById(10);
+            mockRepo.Received().DeleteDraft(fakeDraft);
+        }
+
         private BlogPostPublished ValidPostFactory()
         {
             var post = new BlogPostPublished();

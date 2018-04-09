@@ -172,6 +172,15 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             return RedirectToAction("Home");
         }
 
+        [HttpPost]
+        public IActionResult DeleteDraftById(int blogPostDraftId)
+        {
+            var draft = blogRepository.GetDraftById(blogPostDraftId);
+            blogRepository.DeleteDraft(draft);
+            TempData["message"] = "Your draft was deleted";
+            return RedirectToAction("Home");
+        }
+
         [HttpGet]
         public ViewResult EditStaticPage(int staticPageId)
         {
@@ -259,10 +268,15 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult ManagePublishedPosts(AdminManagePublishedPostsModel model)
+        [HttpGet]
+        public ViewResult ManageDrafts()
         {
-            throw new NotImplementedException();
+            var drafts = blogRepository.GetMostRecentDrafts(1000);
+            var model = new AdminManageDraftsModel
+            {
+                Drafts = drafts.ToList()
+            };
+            return View(model);
         }
 
         // ick

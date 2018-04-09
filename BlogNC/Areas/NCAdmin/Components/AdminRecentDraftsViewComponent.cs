@@ -23,7 +23,6 @@ namespace BlogNC.Areas.NCAdmin.Components
             {
                 Drafts = recent
             };
-
             return View(model);
         }
 
