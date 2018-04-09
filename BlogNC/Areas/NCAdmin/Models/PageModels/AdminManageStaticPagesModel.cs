@@ -10,36 +10,10 @@ namespace BlogNC.Areas.NCAdmin.Models.PageModels
     public class AdminManageStaticPagesModel
     {
         public List<StaticPage> Pages { get; set; }
-        public List<bool> HomePageMirror { get; set; }
-        /*
-        [Required(ErrorMessage = "There must be exactly one landing/home page")]
-        public StaticPage HomePage { get
+        public List<bool> HomePageMirror { get
             {
-                var num = Pages.Count(sp => sp.IsHomePage == true);
-                if (num == 1)
-                {
-                    return Pages.Where(sp => sp.IsHomePage).First();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                foreach (var page in Pages)
-                {
-                    if (page.StaticPageId == value.StaticPageId)
-                    {
-                        page.IsHomePage = true;
-                    }
-                    else
-                    {
-                        page.IsHomePage = false;
-                    }
-                }
+                return Pages.Select(sp => sp.IsHomePage).ToList();
             }
         }
-        */
     }
 }

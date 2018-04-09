@@ -235,6 +235,35 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             mockRepo.DidNotReceive().DeleteStaticPage(page);
         }
 
+        [Test]
+        public void UnPublishPostById_RetrievesById()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+
+            var result = controller.UnPublishPostById(10);
+
+            mockRepo.Received().GetPostById(10);
+        }
+
+        [Test]
+        public void UnPublishPostById_ValidPost_CallsUnPublish()
+        {
+            var mockRepo = Substitute.For<IBlogPostRepository>();
+            var fakePost = new BlogPostPublished
+            {
+                PageTitle = "Fake Title",
+                FullContent = "Some Full Content"
+            };
+            mockRepo.GetPostById(10).Returns(fakePost);
+            var controller = new AdminController(mockRepo);
+            controller.TempData = Substitute.For<ITempDataDictionary>();
+            var result = controller.UnPublishPostById(10);
+
+            mockRepo.Received().UnPublishPostToDraft(fakePost);
+        }
+
         private BlogPostPublished ValidPostFactory()
         {
             var post = new BlogPostPublished();

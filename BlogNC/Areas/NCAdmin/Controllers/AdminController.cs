@@ -122,7 +122,27 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             else
             {
                 TempData["message"] = "Your request could not be completed";
-                return View(nameof(EditPublishedPost),model);
+                return View(nameof(EditPublishedPost), model);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UnPublishPostById(int publishedPostId)
+        {
+            var post = blogRepository.GetPostById(publishedPostId);
+            if (post != null)
+            {
+                blogRepository.UnPublishPostToDraft(post);
+                TempData["message"] = "The selected post was successfully moved to drafts";
+                return RedirectToAction("Home");
+            }
+            else
+            {
+                TempData["message"] = "Your request could not be completed";
+                return View(nameof(EditPublishedPost), new AdminEditPostPublishedModel
+                {
+                    Post = post
+                });
             }
         }
 
@@ -202,8 +222,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             var pages = blogRepository.GetStaticPagesByPriorityAscending();
             var model = new AdminManageStaticPagesModel
             {
-                Pages = pages.ToList(),
-                HomePageMirror = pages.Select(sp => sp.IsHomePage).ToList()
+                Pages = pages.ToList()
             };
             return View(model);
         }
@@ -227,6 +246,23 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             {
                 return View(model);
             }
+        }
+
+        [HttpGet]
+        public ViewResult ManagePublishedPosts()
+        {
+            var posts = blogRepository.GetAllPostsDescending().ToList();
+            var model = new AdminManagePublishedPostsModel
+            {
+                Posts = posts
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ManagePublishedPosts(AdminManagePublishedPostsModel model)
+        {
+            throw new NotImplementedException();
         }
 
         // ick
