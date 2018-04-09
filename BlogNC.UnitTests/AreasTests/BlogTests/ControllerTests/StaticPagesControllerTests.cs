@@ -40,34 +40,6 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             context.Database.EnsureDeleted();
         }
 
-        [Test]
-        public void FindStaticPage_PassInNull_MustReturnHome()
-        {
-            // as of now, this will require that a Home page exist, since the landing page will be 
-            // home -- I don't like this and should change this later.
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestAppDatabase")
-                .Options;
-            var stub = Substitute.For<IHostingEnvironment>();
-            var context = new ApplicationDbContext(options, stub);
-            context.Database.EnsureCreated();
-            context.StaticPages.AddRange(GenerateStaticPages());
-            context.SaveChanges();
-
-
-            IBlogPostRepository repo = new EFBlogPostRepository(context);
-            var controller = new StaticPagesController(repo);
-            var result = controller.FindStaticPage(null);
-
-            Assert.IsTrue(((StaticPageTemplateModel)result.Model).Page.PageTitle == "Home");
-
-            context.Database.EnsureDeleted();
-        }
-
-
-
-
-
 
         private static IQueryable<StaticPage> GenerateStaticPages()
         {

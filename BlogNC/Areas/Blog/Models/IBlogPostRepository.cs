@@ -32,9 +32,13 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<StaticPage> GetFooterStaticPages();
         StaticPage GetStaticPageByUrlTitle(string urlTitle);
         StaticPage GetStaticPageById(int id);
+        ///<summary>Retrives the (hopefully single) home/landing page </summary>
+        StaticPage GetHomePage();
         ///<summary>Lowest number (most important) first</summary>
         IQueryable<StaticPage> GetStaticPagesByPriorityAscending();
         bool SaveStaticPage(StaticPage page);
+        ///<summary>Update information about the file, but not its full content</summary>
+        void UpdateMetadata(StaticPage page);
         void DeleteStaticPage(StaticPage page);
 
 

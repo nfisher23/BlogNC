@@ -218,7 +218,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
                 var pages = model.Pages;
                 foreach (var p in pages)
                 {
-                    blogRepository.SaveStaticPage(p);
+                    blogRepository.UpdateMetadata(p);
                 }
                 TempData["message"] = "Your static page configuration was successfully updated";
                 return RedirectToAction(nameof(ManageStaticPages));
@@ -229,6 +229,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             }
         }
 
+        // ick
         private void FillInSelectedHomePage(AdminManageStaticPagesModel model,
             IFormCollection form)
         {

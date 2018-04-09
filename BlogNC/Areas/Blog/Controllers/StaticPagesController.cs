@@ -19,7 +19,7 @@ namespace BlogNC.Areas.Blog.Controllers
         public ViewResult FindStaticPage(string urlTitle)
         {
             if (urlTitle == null || urlTitle == "")
-                urlTitle = "Home";
+                urlTitle = blogRepository.GetHomePage().UrlTitle;
 
             var page = blogRepository.GetStaticPageByUrlTitle(urlTitle);
             StaticPageTemplateModel model = new StaticPageTemplateModel

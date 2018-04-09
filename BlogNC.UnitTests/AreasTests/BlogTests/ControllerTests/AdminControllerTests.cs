@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
 {
@@ -232,36 +233,6 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
 
 
             mockRepo.DidNotReceive().DeleteStaticPage(page);
-        }
-
-        [Test]
-        public void ManageStaticPages_CallsSavePagesOnAll()
-        {
-            var mockRepo = Substitute.For<IBlogPostRepository>();
-            var page1 = new StaticPage
-            {
-                PageTitle = "title2",
-                FullContent = "content"
-            };
-            var page2 = new StaticPage
-            {
-                PageTitle = "title2",
-                FullContent = "content"
-            };
-            var pages = new List<StaticPage>
-            {
-                page1,
-                page2
-            };
-            AdminController controller = new AdminController(mockRepo);
-            controller.TempData = Substitute.For<ITempDataDictionary>();
-            var result = controller.ManageStaticPages(new AdminManageStaticPagesModel
-            {
-                Pages = pages
-            });
-
-            mockRepo.Received().SaveStaticPage(page1);
-            mockRepo.Received().SaveStaticPage(page2);
         }
 
         private BlogPostPublished ValidPostFactory()

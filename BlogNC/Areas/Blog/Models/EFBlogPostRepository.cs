@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace BlogNC.Areas.Blog.Models
@@ -222,6 +223,22 @@ namespace BlogNC.Areas.Blog.Models
         {
             AppDbContext.StaticPages.Remove(page);
             AppDbContext.SaveChanges();
+        }
+
+        public StaticPage GetHomePage()
+        {
+            return AppDbContext.StaticPages.Where(sp => sp.IsHomePage).FirstOrDefault();
+        }
+
+        public void UpdateMetadata(StaticPage page)
+        {
+            var pageToUpdate = GetStaticPageById(page.StaticPageId);
+            if (pageToUpdate != null)
+            {
+                page.FullContent = pageToUpdate.FullContent;
+                pageToUpdate.UpdatePage(page);
+                AppDbContext.SaveChanges();
+            }
         }
     }
 }
