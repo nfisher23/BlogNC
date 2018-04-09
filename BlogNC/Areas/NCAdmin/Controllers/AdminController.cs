@@ -1,5 +1,6 @@
 ﻿using BlogNC.Areas.Blog.Models;
 using BlogNC.Areas.NCAdmin.Models.PageModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
@@ -201,7 +202,8 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             var pages = blogRepository.GetStaticPagesByPriorityAscending();
             var model = new AdminManageStaticPagesModel
             {
-                Pages = pages.ToList()
+                Pages = pages.ToList(),
+                HomePageMirror = pages.Select(sp => sp.IsHomePage).ToList()
             };
             return View(model);
         }
@@ -209,6 +211,8 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         [HttpPost]
         public IActionResult ManageStaticPages(AdminManageStaticPagesModel model)
         {
+            IFormCollection form = this.Request.Form;
+            FillInSelectedHomePage(model, form);
             if (ModelState.IsValid)
             {
                 var pages = model.Pages;
@@ -222,6 +226,20 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             else
             {
                 return View(model);
+            }
+        }
+
+        private void FillInSelectedHomePage(AdminManageStaticPagesModel model,
+            IFormCollection form)
+        {
+            for (int i = 0; i < model.Pages.Count; i++)
+            {
+                var page = model.Pages[i];
+                page.IsHomePage = false;
+                if (page.PageTitle == form["homepageselector"])
+                {
+                    page.IsHomePage = true;
+                }
             }
         }
     }

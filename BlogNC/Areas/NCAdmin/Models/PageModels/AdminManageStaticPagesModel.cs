@@ -10,7 +10,8 @@ namespace BlogNC.Areas.NCAdmin.Models.PageModels
     public class AdminManageStaticPagesModel
     {
         public List<StaticPage> Pages { get; set; }
-
+        public List<bool> HomePageMirror { get; set; }
+        /*
         [Required(ErrorMessage = "There must be exactly one landing/home page")]
         public StaticPage HomePage { get
             {
@@ -38,7 +39,7 @@ namespace BlogNC.Areas.NCAdmin.Models.PageModels
                     }
                 }
             }
-        } 
-
+        }
+        */
     }
 }

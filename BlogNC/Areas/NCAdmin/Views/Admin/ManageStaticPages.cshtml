@@ -60,13 +60,14 @@
                         <input asp-for="Pages[i].FooterPriority" class="form-control-sm" />
                     </td>
                     <td>
-                        <!--On todo list: will need to write a custom model binder to make these radio buttons
-                            instead of checkboxes-->
-                        <input asp-for="Pages[i].IsHomePage" value="true" />
+                        <!--Functional but sloppy--should refactor to be a tag helper later-->
+                        @if (Model.HomePageMirror[i] == true)
+                        {<input name="homepageselector" value="@Model.Pages[i].PageTitle" type="radio" checked/>}
+                        else
+                        {<input name="homepageselector" value="@Model.Pages[i].PageTitle" type="radio" />}
                     </td>
                 </tr>
             }
-            </div>
         </tbody>
     </table>
     <input type="submit" value="Submit Changes" class="btn btn-outline-info btn-lg" />
