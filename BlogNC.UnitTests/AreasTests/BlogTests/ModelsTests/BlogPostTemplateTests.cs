@@ -116,6 +116,54 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.AreNotEqual(t1.Categories, new List<string> { "Cat12", "Cat22", "Cat32" });
         }
 
+        [Test]
+        public void AddCategory_CatAlreadyExists_DoesntAdd()
+        {
+            BlogPostTemplate t = new FakeBlogPostTemplateSubClass();
+            t.CategoriesDbCollection = "Cat1,Cat2,Cat3";
+
+            t.AddCategory("Cat1");
+
+            Assert.AreEqual(t.Categories.Count, 3);
+        }
+
+        [Test]
+        public void AddCategory_CatDoesntExist_Adds()
+        {
+            BlogPostTemplate t = new FakeBlogPostTemplateSubClass();
+            t.CategoriesDbCollection = "Cat1,Cat2,Cat3";
+
+            t.AddCategory("Cat4");
+
+            Assert.AreEqual(t.Categories.Count, 4);
+            Assert.Contains("Cat4", t.Categories);
+        }
+
+        [Test]
+        public void AddCategories_DontExist_AddsAll()
+        {
+            BlogPostTemplate t = new FakeBlogPostTemplateSubClass();
+            t.CategoriesDbCollection = "Cat1,Cat2,Cat3";
+
+            t.AddCategories("Cat4","Cat5","Cat8");
+
+            Assert.AreEqual(t.Categories.Count, 6);
+            Assert.Contains("Cat4", t.Categories);
+            Assert.Contains("Cat5", t.Categories);
+            Assert.Contains("Cat8", t.Categories);
+        }
+
+        [Test]
+        public void RemoveCategory_Exists_Removes()
+        {
+            BlogPostTemplate t = new FakeBlogPostTemplateSubClass();
+            t.CategoriesDbCollection = "Cat1,Cat2,Cat3";
+
+            t.RemoveCategory("Cat1");
+            Assert.AreEqual(t.Categories.Count, 2);
+            Assert.IsFalse(t.Categories.Contains("Cat1"));
+        }
+
         private class FakeBlogPostTemplateSubClass : BlogPostTemplate
         {
             public override bool UpdatePost(BlogPostTemplate newData)

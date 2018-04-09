@@ -11,6 +11,7 @@ namespace BlogNC.Areas.Blog.Models
         IQueryable<BlogPostDraft> Drafts { get; }
         IQueryable<StaticPage> StaticPages { get; }
 
+
         ///<summary>Most recent first</summary>
         IQueryable<BlogPostPublished> GetAllPostsDescending();
         BlogPostPublished GetPostByUrlTitle(string urlTitle);
@@ -19,13 +20,13 @@ namespace BlogNC.Areas.Blog.Models
         ///<summary>True if successful, false if a post with the same title already exists</summary>
         bool SavePublishedPost(BlogPostPublished post);
         void UnPublishPostToDraft(BlogPostPublished published);
+
+
         void PublishDraftToPost(BlogPostDraft draft);
         void DeleteDraft(BlogPostDraft draft);
-
         IQueryable<BlogPostDraft> GetMostRecentDrafts(int numToGet);
         BlogPostDraft GetDraftById(int draftId);
         bool SaveDraft(BlogPostDraft draft);
-        
 
 
         IQueryable<StaticPage> GetNavBarStaticPages();
@@ -41,6 +42,6 @@ namespace BlogNC.Areas.Blog.Models
         void UpdateMetadata(StaticPage page);
         void DeleteStaticPage(StaticPage page);
 
-
+        List<string> GetAllCategoriesUsed(bool postsOnly = true);
     }
 }

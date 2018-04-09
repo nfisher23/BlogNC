@@ -823,6 +823,32 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
             Assert.IsTrue(repo.StaticPages.Count() < countBefore);
         }
 
+        [Test]
+        public void GetAllCategoriesUsed_PostsOnly_RightCountAndVals()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var cats = repo.GetAllCategoriesUsed(true);
+
+            Assert.AreEqual(cats.Count, 10);
+            Assert.Contains("OtherCat", cats);
+            for (int i = 1; i < 10; i++)
+                Assert.Contains("Cat" + i, cats);
+        }
+
+        [Test]
+        public void GetAllCategoriesUsed_DraftsToo_RightCountAndVals()
+        {
+            EFBlogPostRepository repo = new EFBlogPostRepository(SharedDbContext);
+
+            var cats = repo.GetAllCategoriesUsed(false);
+
+            Assert.AreEqual(cats.Count, 20);
+            Assert.Contains("OtherDraftCat", cats);
+            for (int i = 1; i < 10; i++)
+                Assert.Contains("DraftCat" + i, cats);
+        }
+
 
         private static IQueryable<BlogPostPublished> Generate10Posts()
         {
@@ -836,6 +862,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                     DatePublished = new DateTime(2018, i, i),
                     TimeOfDayPublished = new TimeSpan(i, 0, 0)
                 };
+                p.AddCategories("Cat" + i, "OtherCat");
 
                 posts.Add(p);
             }
@@ -853,7 +880,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ModelsTests
                     FullContent = $"Sample Content for post no {i}",
                     LastEdit = new DateTime(2017, i, i)
                 };
-
+                d.AddCategories("DraftCat" + i, "OtherDraftCat");
                 drafts.Add(d);
             }
 

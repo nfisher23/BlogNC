@@ -36,6 +36,10 @@ namespace BlogNC.Areas.Blog.Models
         private static IQueryable<BlogPostPublished> GenerateSamplePosts()
         {
             List<BlogPostPublished> posts = new List<BlogPostPublished>();
+
+            List<string> cats = new List<string>();
+
+
             for (int i = 1; i < 12; i++)
             {
                 BlogPostPublished p = new BlogPostPublished
@@ -46,7 +50,7 @@ namespace BlogNC.Areas.Blog.Models
                     TimeOfDayPublished = new TimeSpan(i, 0, 0),
                     Author = "Nick Fisher"
                 };
-
+                p.AddCategories("Cat" + i, "BigCat");
                 posts.Add(p);
             }
             return posts.AsQueryable();
@@ -55,6 +59,7 @@ namespace BlogNC.Areas.Blog.Models
         private static IQueryable<BlogPostDraft> GenerateSampleDrafts()
         {
             List<BlogPostDraft> drafts = new List<BlogPostDraft>();
+
             for (int i = 1; i < 10; i++)
             {
                 BlogPostDraft d = new BlogPostDraft

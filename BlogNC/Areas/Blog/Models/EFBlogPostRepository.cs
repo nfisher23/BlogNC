@@ -240,5 +240,20 @@ namespace BlogNC.Areas.Blog.Models
                 AppDbContext.SaveChanges();
             }
         }
+
+        public List<string> GetAllCategoriesUsed(bool postsOnly = true)
+        {
+            var postCats = AppDbContext.Posts.SelectMany(p => p.Categories).Distinct().ToList();
+            if (postsOnly)
+            {
+                return postCats;
+            }
+            else
+            {
+                var draftCats = AppDbContext.Drafts.SelectMany(d => d.Categories);
+                postCats.AddRange(draftCats);
+                return postCats.Distinct().ToList();
+            }
+        }
     }
 }

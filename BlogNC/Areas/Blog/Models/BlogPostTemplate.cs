@@ -31,11 +31,11 @@ namespace BlogNC.Areas.Blog.Models
         public string Author { get; set; }
 
         // EF Core does not yet (as of EF Core 2.0) support 
-        // many-to-many relationships and will probably never support 
+        // many-to-many relationships and will probably never support collections of
         // primitive types. The workaround here, using an entity class for the join table:
         // https://docs.microsoft.com/en-us/ef/core/modeling/relationships#many-to-many
         // can allegedly run into problems when you try to migrate schemas.
-        // To avoid falling down this rabbit hole we'll just take a slight 
+        // To avoid falling down this rabbit hole we'll take a slight 
         // performance hit when querying for categories, which 
         // will probably not be noticeable for the vast majority of blog applications anyway.
         [NotMapped]
@@ -75,6 +75,34 @@ namespace BlogNC.Areas.Blog.Models
                 return true;
             }
             return false;
+        }
+
+        public void AddCategory(string category)
+        {
+            if (!Categories.Contains(category))
+            {
+                Categories.Add(category);
+            }
+        }
+
+        public void AddCategories(params string[] categories)
+        {
+            foreach (var cat in categories)
+            {
+                AddCategory(cat);
+            }
+        }
+
+        public void RemoveCategory(string category)
+        {
+            for (int i = 0; i < Categories.Count; i++)
+            {
+                if (Categories[i] == category)
+                {
+                    Categories.RemoveAt(i);
+                    return;
+                }
+            }
         }
     }
 }

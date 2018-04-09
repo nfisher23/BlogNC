@@ -1,0 +1,36 @@
+﻿@model CategoriesViewModel
+
+<div class="card border-0 mt-3">
+    <div class="card-header m-0 border">
+        <h4 class="card-title mb-0 m-2">Categories</h4>
+    </div>
+    <div class="card-body">
+        <ul class="list-unstyled">
+            @foreach (var pair in Model.SortedPublished)
+            {
+                <li class="m-1">
+                    <a href="#@pair.Key" data-toggle="collapse"
+                       class="text-custom-dark-muted pl-2 lead">
+                        <span class="mr-2">@pair.Key</span>
+                        <span class="px-1 py-0 badge badge-pill border">@pair.Value.Count</span>
+                    </a>
+                    <div class="collapse" id="@pair.Key">
+                        <ul class="list-unstyled m-2">
+                            @foreach (var post in pair.Value)
+                            {
+                                <li class="m-1">
+                                    <a asp-action="FindPost"
+                                       asp-area="Blog" asp-controller="Post"
+                                       asp-route-urlTitle="@post.UrlTitle"
+                                       class="text-custom-dark-muted pl-1">
+                                        @post.PageTitle
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
