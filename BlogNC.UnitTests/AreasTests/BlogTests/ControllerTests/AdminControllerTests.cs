@@ -26,7 +26,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             controller.TempData = Substitute.For<ITempDataDictionary>();
             
             var post = InValidPostFactory();
-            var model = new AdminEditPostPublishedModel
+            var model = new AdminEditPostPublishedModel(mockRepo)
             {
                 Post = post
             };
@@ -46,7 +46,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             controller.TempData = Substitute.For<ITempDataDictionary>();
 
             var post = ValidPostFactory();
-            var model = new AdminEditPostPublishedModel
+            var model = new AdminEditPostPublishedModel(mockRepo)
             {
                 Post = post
             };
@@ -60,12 +60,13 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
         public void EditBlogPostDraft_NoTitle_DoesNotSaveInRepo()
         {
             var mockRepo = Substitute.For<IBlogPostRepository>();
+            mockRepo.GetAllCategoriesUsed(false).Returns(new List<string>());
             var controller = new AdminController(mockRepo);
 
             var draft = new BlogPostDraft();
             draft.PageTitle = "";
             draft.FullContent = "something";
-            var model = new AdminEditBlogPostDraftModel
+            var model = new AdminEditBlogPostDraftModel(mockRepo)
             {
                 Draft = draft
             };
@@ -79,12 +80,13 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
         public void EditBlogPostDraft_HasNonExistentTitle_SavesInRepo()
         {
             var mockRepo = Substitute.For<IBlogPostRepository>();
+            mockRepo.GetAllCategoriesUsed(false).Returns(new List<string>());
             var controller = new AdminController(mockRepo);
 
             controller.TempData = Substitute.For<ITempDataDictionary>();
 
             var draft = ValidDraftFactory();
-            var model = new AdminEditBlogPostDraftModel
+            var model = new AdminEditBlogPostDraftModel(mockRepo)
             {
                 Draft = draft
             };
@@ -102,7 +104,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             controller.TempData = Substitute.For<ITempDataDictionary>();
 
             var post = ValidPostFactory();
-            var model = new AdminEditPostPublishedModel{ Post = post };
+            var model = new AdminEditPostPublishedModel(mockRepo) { Post = post };
             var result = controller.UnPublishPost(model);
 
             mockRepo.Received().UnPublishPostToDraft(post);
@@ -116,7 +118,7 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             controller.TempData = Substitute.For<ITempDataDictionary>();
 
             var post = InValidPostFactory();
-            var model = new AdminEditPostPublishedModel { Post = post };
+            var model = new AdminEditPostPublishedModel(mockRepo) { Post = post };
             controller.ModelState.AddModelError("", "error");
             var result = controller.UnPublishPost(model);
             mockRepo.DidNotReceive().UnPublishPostToDraft(post);
@@ -126,8 +128,9 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
         public void PublishDraftToPost_ValidState_CallsRepoPublish()
         {
             var mockRepo = Substitute.For<IBlogPostRepository>();
+            mockRepo.GetAllCategoriesUsed(false).Returns(new List<string>());
             var draft = new BlogPostDraft { PageTitle = "Something", FullContent = "something..." };
-            var model = new AdminEditBlogPostDraftModel
+            var model = new AdminEditBlogPostDraftModel(mockRepo)
             {
                 Draft = draft
             };
@@ -143,9 +146,10 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
         public void PublishDraftToPost_InValidState_DoesNotCallRepoPublish()
         {
             var mockRepo = Substitute.For<IBlogPostRepository>();
-            
+            mockRepo.GetAllCategoriesUsed(false).Returns(new List<string>());
+
             var draft = new BlogPostDraft { PageTitle = "Something", FullContent = "something..." };
-            var model = new AdminEditBlogPostDraftModel
+            var model = new AdminEditBlogPostDraftModel(mockRepo)
             {
                 Draft = draft
             };
@@ -162,12 +166,13 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
         public void DeleteDraft_CallsDeleteDraftRepo()
         {
             var mockRepo = Substitute.For<IBlogPostRepository>();
+            mockRepo.GetAllCategoriesUsed(false).Returns(new List<string>());
             var draft = new BlogPostDraft { PageTitle = "Something", FullContent = "something..." };
             mockRepo.SaveDraft(draft);
 
             var controller = new AdminController(mockRepo);
             controller.TempData = Substitute.For<ITempDataDictionary>();
-            var result = controller.DeleteDraft(new AdminEditBlogPostDraftModel { Draft = draft });
+            var result = controller.DeleteDraft(new AdminEditBlogPostDraftModel(mockRepo) { Draft = draft });
 
             mockRepo.Received().DeleteDraft(draft);
         }

@@ -28,6 +28,31 @@
         <div><span asp-validation-for="Post.Author" class="text-danger"></span></div>
         <input asp-for="Post.Author" class="form-control" />
     </div>
+
+    <div class="form-group border p-3">
+        <div class="d-block clearfix">
+            <p class="font-weight-bold border-bottom p-2">Categories</p>
+        </div>
+        <div class="d-block mb-4 p-1 pb-3 border-bottom">
+            @for (int i = 0; i < Model.CategoriesSelected.Count; i++)
+            {
+                <input type="checkbox" id="@Model.CategoriesSelected[i].Category"
+                       asp-for="@Model.CategoriesSelected[i].Selected" class="ml-3 mt-2" />
+
+                <label for="@Model.CategoriesSelected[i].Category" class="mt-1 ml-1">
+                    @Model.CategoriesSelected[i].Category
+                </label>
+
+                <input type="hidden" asp-for="@Model.CategoriesSelected[i].Category" />
+            }
+        </div>
+        <div class="ml-auto">
+            <input type="text" id="newCategory" name="newCategory" />
+            <input class="btn ml-1 btn-outline-secondary btn-sm mb-1" type="submit" 
+                   value="Add Category"
+                   asp-action="AddCategoryToPost" />
+        </div>
+    </div>
     <div class="form-group">
         <div class="form-row">
             <div class="col-md-4 col-lg-3">

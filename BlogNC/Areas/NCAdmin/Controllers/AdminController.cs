@@ -30,7 +30,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             AdminEditPostPublishedModel model;
             if (post == null)
             {
-                model = new AdminEditPostPublishedModel
+                model = new AdminEditPostPublishedModel(blogRepository)
                 {
                     Post = new BlogPostPublished
                     {
@@ -40,7 +40,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             }
             else
             {
-                model = new AdminEditPostPublishedModel
+                model = new AdminEditPostPublishedModel(blogRepository)
                 {
                     Post = post
                 };
@@ -71,14 +71,14 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             AdminEditBlogPostDraftModel model;
             if (repoDraft == null)
             {
-                model = new AdminEditBlogPostDraftModel
+                model = new AdminEditBlogPostDraftModel(blogRepository)
                 {
                     Draft = new BlogPostDraft()
                 };
             }
             else
             {
-                model = new AdminEditBlogPostDraftModel
+                model = new AdminEditBlogPostDraftModel(blogRepository)
                 {
                     Draft = repoDraft
                 };
@@ -140,6 +140,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             {
                 TempData["message"] = "Your request could not be completed";
                 return View(nameof(EditPublishedPost), new AdminEditPostPublishedModel
+                (blogRepository)
                 {
                     Post = post
                 });
@@ -277,6 +278,28 @@ namespace BlogNC.Areas.NCAdmin.Controllers
                 Drafts = drafts.ToList()
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddCategoryToPost(AdminEditPostPublishedModel model, string newCategory)
+        {
+            model.CategoriesSelected.Add(new CategoryCheckBox
+            {
+                Category = newCategory,
+                Selected = true
+            });
+            return View(nameof(EditPublishedPost), model);
+        }
+
+        [HttpPost]
+        public IActionResult AddCategoryToDraft(AdminEditBlogPostDraftModel model, string newCategory)
+        {
+            model.CategoriesSelected.Add(new CategoryCheckBox
+            {
+                Category = newCategory,
+                Selected = true
+            });
+            return View(nameof(EditBlogPostDraft), model);
         }
 
         // ick
