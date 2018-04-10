@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlogNC.Areas.Blog.Controllers
 {
+    [Area("Blog")]
     public class StaticPagesController : Controller
     {
         IBlogPostRepository blogRepository;

@@ -1,12 +1,17 @@
 ﻿@model AdminEditBlogPostDraftModel
 
 
+
+
 <form asp-action="EditBlogPostDraft" method="post">
     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     <input type="hidden" asp-for="Draft.BlogPostTemplateId" />
     <div class="form-group border-bottom m-2">
-        <input class="btn btn-outline-primary btn-lg mt-1 mx-2 mb-3" type="submit" value="Publish"
-               asp-action="PublishDraftToPost" />
+        <input class="btn btn-info btn-lg mt-1 mb-3" type="submit"
+               value="Update"  asp-action="UpdateDraft" />
+        <input class="btn btn-outline-primary btn-lg mt-1 mx-2 mb-3" type="submit"
+           value="Preview" formtarget="_blank"
+           asp-action="PreviewDraft" asp-route-draftId="@Model.Draft.BlogPostTemplateId" />
         <input class="btn btn-danger float-right mr-3 btn-lg" type="submit" value="Delete"
                asp-action="DeleteDraft" />
     </div>

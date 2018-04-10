@@ -2,16 +2,7 @@
 
 @{ int iter = 0; }
 
-@if (TempData.Keys.Count > 0
-     && TempData.Keys.Contains("message"))
-{
-    <div class="alert alert-info" role="alert">
-        <h5>
-            Message: @TempData["message"]
-        </h5>
-    </div>
 
-}
 <div asp-validation-summary="All" class="text-danger text-lg-center"> </div>
 
 <div class="row bg-light m-0 pt-3 border-bottom">

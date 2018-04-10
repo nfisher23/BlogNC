@@ -1,0 +1,10 @@
+﻿@if (TempData.Keys.Count > 0
+        && TempData.Keys.Contains("message"))
+{
+    <div class="alert alert-info" role="alert">
+        <h5>
+            Message: @TempData["message"]
+        </h5>
+    </div>
+
+}

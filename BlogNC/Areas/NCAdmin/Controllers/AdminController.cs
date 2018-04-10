@@ -1,4 +1,5 @@
 ﻿using BlogNC.Areas.Blog.Models;
+using BlogNC.Areas.Blog.Models.PageModels;
 using BlogNC.Areas.NCAdmin.Models.PageModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace BlogNC.Areas.NCAdmin.Controllers
 {
+    [Area("NCAdmin")]
     public class AdminController : Controller
     {
         IBlogPostRepository blogRepository;
@@ -300,6 +302,44 @@ namespace BlogNC.Areas.NCAdmin.Controllers
                 Selected = true
             });
             return View(nameof(EditBlogPostDraft), model);
+        }
+
+        [HttpPost]
+        public IActionResult PreviewDraft(AdminEditBlogPostDraftModel model)
+        {
+            // save and redirect
+            if (ModelState.IsValid)
+            {
+                blogRepository.SaveDraft(model.Draft);
+            }
+            return RedirectToAction(nameof(PreviewDraft), new { draftId = model.Draft.BlogPostTemplateId });
+        }
+
+        [HttpGet]
+        public IActionResult PreviewDraft(int draftId)
+        {
+            var post = new BlogPostPublished();
+            var draft = blogRepository.GetDraftById(draftId);
+            post.PublishDraftToPost(draft);
+            BlogPostViewModel postModel = new BlogPostViewModel
+            {
+                Post = post
+            };
+            return View("BlogPost", postModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateDraft(AdminEditBlogPostDraftModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                blogRepository.SaveDraft(model.Draft);
+                TempData["message"] = "Your draft was successfully updated";
+            }
+            else
+                TempData["message"] = "Your requested action could not be completed";
+
+            return RedirectToAction(nameof(EditBlogPostDraft), new { blogPostDraftId = model.Draft.BlogPostTemplateId });
         }
 
         // ick

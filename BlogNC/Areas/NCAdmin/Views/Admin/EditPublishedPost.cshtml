@@ -1,15 +1,5 @@
 ﻿@model AdminEditPostPublishedModel
 
-@if (TempData.Keys.Count > 0
-         && TempData.Keys.Contains("message"))
-{
-    <div class="alert alert-info" role="alert">
-        <h5>
-            Message: @TempData["message"]
-        </h5>
-    </div>
-
-}
 
 <form asp-action="EditPublishedPost" method="post">
     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
