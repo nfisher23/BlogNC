@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogNC.Areas.Blog.Infrastructure;
 using BlogNC.Areas.Blog.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,8 @@ namespace BlogNC
                 opts.AreaViewLocationFormats.Insert(0, "Areas/Blog/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
             });
 
+            
+
 
             services.AddMvc();
         }
@@ -64,6 +67,7 @@ namespace BlogNC
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseExceptionHandler("/ErrorHandlingPage");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -76,7 +80,15 @@ namespace BlogNC
                     template: "NCAdmin/{action=Home}",
                     defaults: new { area = "NCAdmin", controller = "Admin" });
 
-
+                routes.MapRoute(
+                    name: "",
+                    template: "ErrorHandlingPage",
+                    defaults: new
+                    {
+                        area = "Blog",
+                        controller = "StaticPages",
+                        action = "ErrorHandlingPage"
+                    });
                 routes.MapRoute(
                     name: "",
                     template: "{urlTitle?}",

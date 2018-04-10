@@ -2,6 +2,7 @@
 using BlogNC.Areas.Blog.Models;
 using BlogNC.Areas.Blog.Models.PageModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;
@@ -32,10 +33,10 @@ namespace BlogNC.UnitTests.AreasTests.BlogTests.ControllerTests
             IBlogPostRepository repo = new EFBlogPostRepository(context);
             var controller = new StaticPagesController(repo);
             var result = controller.FindStaticPage("Static-Page-No-2");
-
+            var viewResult = (ViewResult)result;
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Model is StaticPageTemplateModel);
-            Assert.IsTrue(((StaticPageTemplateModel)(result.Model)).Page.FullContent.Contains("Sample Content for"));
+            Assert.IsTrue(viewResult.Model is StaticPageTemplateModel);
+            Assert.IsTrue(((StaticPageTemplateModel)(viewResult.Model)).Page.FullContent.Contains("Sample Content for"));
 
             context.Database.EnsureDeleted();
         }

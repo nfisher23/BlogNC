@@ -17,14 +17,16 @@ namespace BlogNC.Areas.Blog.Controllers
             blogRepository = repo;
         }
 
-        public ViewResult FindPost([FromRoute]string urlTitle)
+        public IActionResult FindPost([FromRoute]string urlTitle)
         {
             var post = blogRepository.GetPostByUrlTitle(urlTitle);
+            if (post == null)
+                return this.NotFound();
+
             BlogPostViewModel model = new BlogPostViewModel
             {
                 Post = post
             };
-
             return View("BlogPost", model);
         }
     }

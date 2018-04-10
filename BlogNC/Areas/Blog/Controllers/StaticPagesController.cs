@@ -17,17 +17,26 @@ namespace BlogNC.Areas.Blog.Controllers
             blogRepository = repo;
         }
 
-        public ViewResult FindStaticPage(string urlTitle)
+        public IActionResult FindStaticPage(string urlTitle)
         {
             if (urlTitle == null || urlTitle == "")
                 urlTitle = blogRepository.GetHomePage().UrlTitle;
 
             var page = blogRepository.GetStaticPageByUrlTitle(urlTitle);
+            if (page == null)
+                return this.NotFound();
+
             StaticPageTemplateModel model = new StaticPageTemplateModel
             {
                 Page = page
             };
             return View("StaticPageTemplate", model);
+        }
+
+
+        public ViewResult ErrorHandlingPage()
+        {
+            return View();
         }
     }
 }
