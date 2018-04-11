@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using BlogNC.Areas.NCAccount.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using System;
@@ -29,6 +31,27 @@ namespace BlogNC.Areas.Blog.Models
                     // static pages
                     context.StaticPages.AddRange(GenerateStaticPages());
                     context.SaveChanges();
+                }
+            }
+        }
+
+        public static string DefaultUsername = "BlogNCUser";
+        public static string DefaultPassword = "BlogNCDefaultPassword1!";
+
+        public static async Task EnsureIdentityPopulated(IServiceProvider provider,
+            IHostingEnvironment environment)
+        {
+            using (var context = provider.GetRequiredService<AppIdentityDbContext>())
+            {
+                var _userManager = provider.GetRequiredService<UserManager<AppUser>>();
+
+                if (!_userManager.Users.Any())
+                {
+                    AppUser user = new AppUser
+                    {
+                        UserName = DefaultUsername
+                    };
+                    await _userManager.CreateAsync(user, DefaultPassword);
                 }
             }
         }

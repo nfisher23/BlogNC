@@ -1,4 +1,5 @@
-﻿using BlogNC.Areas.NCAccount.Models;
+﻿using BlogNC.Areas.Blog.Models;
+using BlogNC.Areas.NCAccount.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +38,78 @@ namespace BlogNC.Areas.NCAccount.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(AccountLoginModel model)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                AppUser user = await _userManager.FindByNameAsync(model.Name);
+                if (user != null)
+                {
+                    await _signInManager.SignOutAsync();
+                    var result = await _signInManager.PasswordSignInAsync(user,
+                        model.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction(nameof(CreateAccount),
+                            new { returnUrl = model.ReturnUrl });
+                    }
+                }
+            }
+            ModelState.AddModelError("", "Invalid Name or Password");
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAccount(CreateAccountModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _signInManager.SignOutAsync();
+                AppUser newUser = new AppUser
+                {
+                    UserName = model.Name
+                };
+                var create = await _userManager.CreateAsync(newUser, model.Password);
+                
+                if (create.Succeeded)
+                {
+                    var signIn = await _signInManager.PasswordSignInAsync(newUser, model.Password,
+                        false, false);
+
+                    if (signIn.Succeeded)
+                    {
+                        // delete default seeded account
+                        AppUser userToDelete = await _userManager.FindByNameAsync(SeedData.DefaultUsername);
+                        if (userToDelete != null)
+                            await _userManager.DeleteAsync(userToDelete);
+
+                        return Redirect(model.ReturnUrl ?? "/");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "You could not be signed in with your new account " +
+                            "Please go to our github page and explain the steps that led to this bad outcome and we will " +
+                            "work on a solution");
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "We could not create your account. " +
+                        "Please go to our github page and explain the steps that led to this bad outcome and we will " +
+                        "work on a solution");
+                    return View(model);
+                }
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public ViewResult CreateAccount(string returnUrl)
+        {
+            return View(new CreateAccountModel { ReturnUrl = returnUrl });
         }
     }
 }

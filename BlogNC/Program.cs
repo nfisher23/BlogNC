@@ -21,7 +21,8 @@ namespace BlogNC
                 (IHostingEnvironment)host.Services.GetService(typeof(IHostingEnvironment));
 
             SeedData.EnsureBlogPopulated(host.Services, env);
-             
+            SeedData.EnsureIdentityPopulated(host.Services, env).Wait();
+
             host.Run(); 
         } 
 

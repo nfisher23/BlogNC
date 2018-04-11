@@ -53,6 +53,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult EditPublishedPost(AdminEditPostPublishedModel model)
         {
             if (ModelState.IsValid 
