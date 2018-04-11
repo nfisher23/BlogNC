@@ -39,10 +39,11 @@ namespace BlogNC.Areas.Blog.Models
                     = provider.GetRequiredService<ApplicationDbContext>())
                 {
                     context.Database.EnsureCreated();
-
-                    context.StaticPages.Add(GenerateProductionStaticPage());
-                    context.Drafts.Add(GenerateProductionDraft());
-
+                    if (context.StaticPages.Count() == 0)
+                    {
+                        context.StaticPages.Add(GenerateProductionStaticPage());
+                        context.Drafts.Add(GenerateProductionDraft());
+                    }
                     context.SaveChanges();
                 }
             }
