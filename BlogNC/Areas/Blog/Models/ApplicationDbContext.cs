@@ -18,7 +18,7 @@ namespace BlogNC.Areas.Blog.Models
             }
             else if (env.IsProduction())
             {
-                throw new NotImplementedException(); // He wasn't ready!
+
             }
         }
 

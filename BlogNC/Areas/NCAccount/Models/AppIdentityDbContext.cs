@@ -19,7 +19,7 @@ namespace BlogNC.Areas.NCAccount.Models
             }
             else if (env.IsProduction())
             {
-                throw new NotImplementedException();
+                Database.EnsureCreated();
             }
         }
     }

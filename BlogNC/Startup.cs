@@ -33,8 +33,8 @@ namespace BlogNC
             
 
             services.AddSingleton<IHostingEnvironment>(CurrentEnvironment);
-            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(blogContextConnectionString));
-            services.AddDbContext<AppIdentityDbContext>(o => o.UseSqlite(identityContextConnectionString));
+            services.AddDbContext<ApplicationDbContext>(o => o.UseInMemoryDatabase(blogContextConnectionString));
+            services.AddDbContext<AppIdentityDbContext>(o => o.UseInMemoryDatabase(identityContextConnectionString));
             services.AddTransient<IBlogPostRepository, EFBlogPostRepository>();
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
@@ -53,16 +53,27 @@ namespace BlogNC
         public void ConfigureProductionServices(IServiceCollection services)
         {
             var blogContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppDbContext");
+            var identityContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppIdentityDbContext");
 
-            // SQLite does not have support for a large number of built in EF Core migrations--
-            // when we move to production we will use a local PostgreSQL DB and cross 
-            // this bridge once the MVR is completed
-            throw new NotImplementedException();
-            //services.AddDbContext<ApplicationDbContext>(o => o.UseNpgSql(blogContextConnectionString));
+
+            services.AddSingleton<IHostingEnvironment>(CurrentEnvironment);
+            services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(blogContextConnectionString));
+            services.AddDbContext<AppIdentityDbContext>(o => o.UseSqlite(identityContextConnectionString));
+            services.AddTransient<IBlogPostRepository, EFBlogPostRepository>();
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<RazorViewEngineOptions>(opts =>
+            {
+                // for preview draft functionality
+                opts.AreaViewLocationFormats.Insert(0, "Areas/Blog/Views/Post/{0}" + RazorViewEngine.ViewExtension);
+                opts.AreaViewLocationFormats.Insert(0, "Areas/Blog/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
+            });
 
             services.AddMvc();
         }
-
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

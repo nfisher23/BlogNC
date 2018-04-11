@@ -33,6 +33,19 @@ namespace BlogNC.Areas.Blog.Models
                     context.SaveChanges();
                 }
             }
+            else if (environment.IsProduction())
+            {
+                using (ApplicationDbContext context
+                    = provider.GetRequiredService<ApplicationDbContext>())
+                {
+                    context.Database.EnsureCreated();
+
+                    context.StaticPages.Add(GenerateProductionStaticPage());
+                    context.Drafts.Add(GenerateProductionDraft());
+
+                    context.SaveChanges();
+                }
+            }
         }
 
         public static string DefaultUsername = "BlogNCUser";
@@ -145,6 +158,46 @@ namespace BlogNC.Areas.Blog.Models
 
 
             return pages.AsQueryable();
+        }
+
+        private static StaticPage GenerateProductionStaticPage()
+        {
+            var page = new StaticPage
+            {
+                PageTitle = "Welcome to BlogNC",
+                FullContent = "<h3>Welcome</h3><br /><p>Welcome to BlogNC, an open source blogging" +
+                " platform coded in ASP .NET Core MVC. I wanted to create a wordpress alternative " +
+                "for anyone who knows how to program in C#, or for anyone who is a little annoyed at using " +
+                "php all the time :)</p>" +
+                "<p>This project is still very much under development. There are many features that should be " +
+                "and will be added as time moves along. I appreciate your interest, and do hope that you find " +
+                "it serves (most of) your needs. Because this project is open source, I do invite you to " +
+                "contribute on <a href=\"https://github.com/nfisher23/BlogNC\">The BlogNC GitHub page</a>. We" +
+                " appreciate any feedback you give us in advance!</p>" +
+                "<p>To get started with BlogNC, review the aforementioned GitHub page for the latest instructions." +
+                " We hope you have a wonderful time!</p>" +
+                "<p>-Nick Fisher, BlogNC founder and voted most-handsome BlogNC developer for three weeks running</p>",
+                InMainNav = true,
+                MainNavPriority = 0,
+                InFooter = true,
+                FooterPriority = 0,
+                IsHomePage = true
+            };
+            return page;
+        }
+
+        private static BlogPostDraft GenerateProductionDraft()
+        {
+            var draft = new BlogPostDraft
+            {
+                PageTitle = "A Sample Draft",
+                FullContent = "<p>Welcome to BlogNC! This is a sample draft. You can " +
+                "publish this draft if you want, or delete this one and create your own. The sky " +
+                "is the limit (and software limitations, but that's less of a philisophical argument).</p>",
+                Author = "You!",
+                CategoriesDbCollection = "FirstCategory"
+            };
+            return draft;
         }
     }
 }

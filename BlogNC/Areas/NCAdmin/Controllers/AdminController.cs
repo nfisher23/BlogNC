@@ -65,7 +65,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             else
             {
                 TempData["message"] = "Your changes could not be saved";
-                return View();
+                return View(model);
             }
         }
 
@@ -110,7 +110,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
                 TempData["message"] = "A post with that title already exists. " +
                     "Your changes could not be saved";
                 ModelState.AddModelError("", "A post with that title already exists");
-                return View();
+                return View(model);
             }
         }
 
@@ -211,7 +211,7 @@ namespace BlogNC.Areas.NCAdmin.Controllers
             else
             {
                 TempData["message"] = "Your requested action could not be completed";
-                return View();
+                return View(model);
             }
         }
 

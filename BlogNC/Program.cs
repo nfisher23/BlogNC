@@ -24,12 +24,13 @@ namespace BlogNC
             SeedData.EnsureIdentityPopulated(host.Services, env).Wait();
 
             host.Run(); 
-        } 
+        }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseKestrel() 
+                .UseKestrel()
+                .UseUrls("http://localhost:2300")
                 .UseDefaultServiceProvider(opts => opts.ValidateScopes = false) 
                 .Build();
     }
