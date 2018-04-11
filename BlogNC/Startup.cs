@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogNC.Areas.NCAccount.Models;
 using BlogNC.Areas.Blog.Infrastructure;
 using BlogNC.Areas.Blog.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,19 +29,23 @@ namespace BlogNC
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             var blogContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppDbContext");
+            var identityContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppIdentityDbContext");
+            
 
             services.AddSingleton<IHostingEnvironment>(CurrentEnvironment);
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlite(blogContextConnectionString));
+            services.AddDbContext<AppIdentityDbContext>(o => o.UseSqlite(identityContextConnectionString));
             services.AddTransient<IBlogPostRepository, EFBlogPostRepository>();
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
             services.Configure<RazorViewEngineOptions>(opts =>
             {
-                // for preview functionality
+                // for preview draft functionality
                 opts.AreaViewLocationFormats.Insert(0, "Areas/Blog/Views/Post/{0}" + RazorViewEngine.ViewExtension);
                 opts.AreaViewLocationFormats.Insert(0, "Areas/Blog/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
             });
-
-            
-
 
             services.AddMvc();
         }
@@ -64,10 +70,14 @@ namespace BlogNC
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
+            else if (env.IsProduction())
+            {
+                app.UseExceptionHandler("/ErrorHandlingPage");
+            }
+
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseExceptionHandler("/ErrorHandlingPage");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -82,6 +92,11 @@ namespace BlogNC
 
                 routes.MapRoute(
                     name: "",
+                    template: "Account/{action=Login}",
+                    defaults: new { area = "NCAccount", controller = "Account" });
+
+                routes.MapRoute(
+                    name: "",
                     template: "ErrorHandlingPage",
                     defaults: new
                     {
@@ -89,6 +104,7 @@ namespace BlogNC
                         controller = "StaticPages",
                         action = "ErrorHandlingPage"
                     });
+
                 routes.MapRoute(
                     name: "",
                     template: "{urlTitle?}",

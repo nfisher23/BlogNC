@@ -1,6 +1,7 @@
 ﻿using BlogNC.Areas.Blog.Models;
 using BlogNC.Areas.Blog.Models.PageModels;
 using BlogNC.Areas.NCAdmin.Models.PageModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace BlogNC.Areas.NCAdmin.Controllers
 {
     [Area("NCAdmin")]
+    [Authorize]
     public class AdminController : Controller
     {
         IBlogPostRepository blogRepository;

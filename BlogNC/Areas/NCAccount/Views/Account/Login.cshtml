@@ -1,0 +1,34 @@
+﻿@model AccountLoginModel
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/login-styles.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+    <form class="form-signin">
+        <img class="mb-4" src="~/imgs/blog-nc-logo.svg" alt="blog nc" width="290" height="93">
+        <h1 class="mb-4 text-center h2">Login</h1>
+        <label asp-for="Name" class="sr-only">Login Name</label>
+        <input class="form-control" placeholder="Username" autofocus>
+        <label asp-for="Password" class="sr-only">Password</label>
+        <input class="form-control my-3" placeholder="Password">
+        <button class="btn btn-lg btn-info my-3" type="submit">Sign In</button>
+    </form>
+</body>
+</html>
+
