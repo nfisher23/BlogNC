@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace BlogNC
 {
@@ -30,7 +31,6 @@ namespace BlogNC
         {
             var blogContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppDbContext");
             var identityContextConnectionString = AppSettingsConfiguration.GetConnectionString("AppIdentityDbContext");
-            
 
             services.AddSingleton<IHostingEnvironment>(CurrentEnvironment);
             services.AddDbContext<ApplicationDbContext>(o => o.UseInMemoryDatabase(blogContextConnectionString));
@@ -47,7 +47,10 @@ namespace BlogNC
                 opts.AreaViewLocationFormats.Insert(0, "Areas/Blog/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
             });
 
-            services.AddMvc();
+            services.AddMvc(o =>
+            {
+                o.Filters.Add(new AllowAnonymousFilter());
+            });
         }
 
         public void ConfigureProductionServices(IServiceCollection services)
@@ -81,15 +84,16 @@ namespace BlogNC
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
-            else if (env.IsProduction())
+            else
             {
                 app.UseExceptionHandler("/ErrorHandlingPage");
+                app.UseAuthentication();
             }
+
 
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

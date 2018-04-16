@@ -48,8 +48,13 @@ namespace BlogNC.Areas.NCAccount.Controllers
                         model.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction(nameof(CreateAccount),
-                            new { returnUrl = model.ReturnUrl });
+                        if (SeedData.IsFirstSignIn(model.Name, model.Password))
+                        {
+                            return RedirectToAction(nameof(CreateAccount),
+                                new { returnUrl = model.ReturnUrl });
+                        }
+                        else
+                            return Redirect(model.ReturnUrl ?? "/");
                     }
                 }
             }
@@ -110,6 +115,12 @@ namespace BlogNC.Areas.NCAccount.Controllers
         public ViewResult CreateAccount(string returnUrl)
         {
             return View(new CreateAccountModel { ReturnUrl = returnUrl });
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return Redirect("/");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ namespace BlogNC.Areas.Blog.Models
             this.DateTimePublished = DateTime.Now;
         }
 
+        [Display(Name = "Time Of Day Published")]
         public TimeSpan TimeOfDayPublished { get; set; }
+        [Display(Name = "Date Published")]
         public DateTime DatePublished
         {
             get { return _datePublished.Date; }

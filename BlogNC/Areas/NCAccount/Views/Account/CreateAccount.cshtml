@@ -24,7 +24,7 @@
         <input type="hidden" asp-for="ReturnUrl" />
         <img class="mb-4" src="~/imgs/blog-nc-logo.svg" alt="blog nc" width="290" height="93">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <h1 class="mb-4 text-center h2">Login</h1>
+        <h1 class="mb-4 text-center h2">Create Account</h1>
         <span class="text-danger" asp-validation-for="Name"></span>
         <label asp-for="Name" class="sr-only">Login Name</label>
         <input asp-for="Name" class="form-control mb-3" placeholder="Username" autofocus>
@@ -34,7 +34,7 @@
         <span class="text-danger" asp-validation-for="RetypePassword"></span>
         <label asp-for="RetypePassword" class="sr-only">Password</label>
         <input asp-for="RetypePassword" class="form-control mb-3" placeholder="Retype Password" autofocus>
-        <button class="btn btn-lg btn-info my-3" type="submit">Sign In</button>
+        <button class="btn btn-lg btn-info my-3" type="submit">Create User Profile</button>
     </form>
 </body>
 </html>

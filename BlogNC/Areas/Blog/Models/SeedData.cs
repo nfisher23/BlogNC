@@ -70,6 +70,11 @@ namespace BlogNC.Areas.Blog.Models
             }
         }
 
+        public static bool IsFirstSignIn(string username, string password)
+        {
+            return (username == DefaultUsername && password == DefaultPassword);
+        }
+
         private static IQueryable<BlogPostPublished> GenerateSamplePosts()
         {
             List<BlogPostPublished> posts = new List<BlogPostPublished>();

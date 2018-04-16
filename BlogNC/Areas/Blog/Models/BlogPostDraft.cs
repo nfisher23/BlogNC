@@ -13,6 +13,7 @@ namespace BlogNC.Areas.Blog.Models
             LastEdit = DateTime.Now;
         }
 
+        
         public DateTime TimeStarted { get; }
 
         public DateTime LastEdit { get; set; }

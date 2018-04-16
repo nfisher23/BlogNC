@@ -14,6 +14,7 @@ namespace BlogNC.Areas.Blog.Models
         public int BlogPostTemplateId { get; set; } // for entity framework
 
         [Required]
+        [Display(Name = "Page Title")]
         public string PageTitle
         {
             get
@@ -27,6 +28,7 @@ namespace BlogNC.Areas.Blog.Models
             }
         }
         public string UrlTitle { get; private set; }
+        [Display(Name = "Full Html Content", Description = "Enter your html here")]
         public string FullContent { get; set; }
         public string Author { get; set; }
 
