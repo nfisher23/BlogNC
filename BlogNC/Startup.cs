@@ -126,9 +126,6 @@ namespace BlogNC
                     template: "{urlTitle?}",
                     defaults: new { area = "Blog", controller = "StaticPages",
                         action = "FindStaticPage"});
-
-
-
             });
         }
     }

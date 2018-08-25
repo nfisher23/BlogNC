@@ -30,7 +30,6 @@ namespace BlogNC
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel()
-                .UseUrls("http://localhost:2300")
                 .UseDefaultServiceProvider(opts => opts.ValidateScopes = false) 
                 .Build();
     }
